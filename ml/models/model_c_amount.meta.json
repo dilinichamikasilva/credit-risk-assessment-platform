@@ -1,0 +1,27 @@
+{
+  "model_version": "model_c_v1",
+  "task": "recommended_loan_amount",
+  "target": "loan_amount (Approved applications only)",
+  "target_transform": "log1p / expm1 via TransformedTargetRegressor",
+  "split": {
+    "train": 1859,
+    "val": 398,
+    "test": 399
+  },
+  "metrics": {
+    "val": {
+      "mae": 2603138.828360553,
+      "rmse": 3480355.7057579276,
+      "mape": 18.262444169538664
+    },
+    "test": {
+      "mae": 2657977.4337406014,
+      "rmse": 3621364.533705765,
+      "mape": 18.00766580371728
+    }
+  },
+  "inference_rule": "recommended_amount = min(requested_amount, model_prediction)",
+  "notes": "Requested loan_amount is excluded from features to avoid leakage. Cap at the requested amount in the API, not in this training target.",
+  "artifact": "E:/ML/CREDIT-RISK-ASSESMENT-ML-Final/ml/models/model_c_amount.pkl",
+  "saved_at": "2026-09-10T15:02:26.467386+00:00"
+}

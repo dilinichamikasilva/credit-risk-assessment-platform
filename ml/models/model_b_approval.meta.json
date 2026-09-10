@@ -1,0 +1,43 @@
+{
+  "model_version": "model_b_v1",
+  "task": "loan_approval",
+  "target": "loan_status (Approved=1)",
+  "winner": "xgboost",
+  "split": {
+    "train": 2988,
+    "val": 640,
+    "test": 641
+  },
+  "metrics": {
+    "random_forest_val": {
+      "auc_roc": 0.9999480875451638,
+      "ks_statistic": 0.992462311557789,
+      "average_precision": 0.9999685140125226,
+      "brier": 0.004733171333232801,
+      "f1": 0.9974937343358395,
+      "precision": 0.995,
+      "recall": 1.0
+    },
+    "xgboost_val": {
+      "auc_roc": 0.9999792350180655,
+      "ks_statistic": 0.9974874371859297,
+      "average_precision": 0.9999874371859296,
+      "brier": 0.0015811484772711992,
+      "f1": 0.9987421383647799,
+      "precision": 1.0,
+      "recall": 0.9974874371859297
+    },
+    "winner_test": {
+      "auc_roc": 1.0,
+      "ks_statistic": 1.0,
+      "average_precision": 1.0,
+      "brier": 0.00046260652015917003,
+      "f1": 1.0,
+      "precision": 1.0,
+      "recall": 1.0
+    }
+  },
+  "notes": "risk_tier is a CIBIL bin (Poor/Fair/Good/Excellent), not a separate model. Mild imbalance handled with class_weight/scale_pos_weight; SMOTE not used.",
+  "artifact": "E:/ML/CREDIT-RISK-ASSESMENT-ML-Final/ml/models/model_b_approval.pkl",
+  "saved_at": "2026-09-10T15:02:10.323366+00:00"
+}

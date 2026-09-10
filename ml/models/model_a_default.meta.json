@@ -1,0 +1,83 @@
+{
+  "model_version": "model_a_v1",
+  "task": "default_probability",
+  "target": "SeriousDlqin2yrs",
+  "features": [
+    "RevolvingUtilizationOfUnsecuredLines",
+    "age",
+    "NumberOfTime30-59DaysPastDueNotWorse",
+    "DebtRatio",
+    "MonthlyIncome",
+    "NumberOfOpenCreditLinesAndLoans",
+    "NumberOfTimes90DaysLate",
+    "NumberRealEstateLoansOrLines",
+    "NumberOfTime60-89DaysPastDueNotWorse",
+    "NumberOfDependents",
+    "MonthlyDebt",
+    "TotalLatePayments",
+    "LogIncome",
+    "LogDebtRatio"
+  ],
+  "best_params": {
+    "n_estimators": 364,
+    "max_depth": 3,
+    "learning_rate": 0.14108340900523528,
+    "subsample": 0.9100531293444458,
+    "colsample_bytree": 0.9697494707820946,
+    "min_child_weight": 11,
+    "reg_lambda": 0.24637685958997463,
+    "gamma": 0.23713402899336497
+  },
+  "scale_pos_weight": 13.961527500712453,
+  "split": {
+    "train": 105000,
+    "val": 22500,
+    "test": 22500
+  },
+  "metrics": {
+    "baseline_test": {
+      "auc_roc": 0.8521642800249694,
+      "ks_statistic": 0.5461915491501927,
+      "average_precision": 0.3734660820063124,
+      "brier": 0.1461743386157292,
+      "f1": 0.33178897025855625,
+      "precision": 0.21399652978600348,
+      "recall": 0.738031914893617
+    },
+    "xgb_raw_test": {
+      "auc_roc": 0.861276340503561,
+      "ks_statistic": 0.5686304736869839,
+      "average_precision": 0.39259079682250686,
+      "brier": 0.14222651720046997,
+      "f1": 0.33367066647390486,
+      "precision": 0.2131904673933124,
+      "recall": 0.7672872340425532
+    },
+    "calibrated_val": {
+      "auc_roc": 0.8724212096630362,
+      "ks_statistic": 0.5858490523017555,
+      "average_precision": 0.3991121401363396,
+      "brier": 0.04820843903479018,
+      "f1": 0.3147605083088954,
+      "precision": 0.5940959409594095,
+      "recall": 0.21409574468085107
+    },
+    "calibrated_test": {
+      "auc_roc": 0.8598260104254913,
+      "ks_statistic": 0.5642654071900219,
+      "average_precision": 0.37686080521626536,
+      "brier": 0.0494752975724055,
+      "f1": 0.28614157527417744,
+      "precision": 0.5717131474103586,
+      "recall": 0.1908244680851064
+    }
+  },
+  "risk_bands": {
+    "low_lt": 0.1,
+    "medium_lt": 0.35,
+    "high_ge": 0.35
+  },
+  "notes": "Probabilities are isotonic-calibrated on the validation fold. Raw XGBoost used scale_pos_weight; SMOTE was not required after recall check.",
+  "artifact": "E:/ML/CREDIT-RISK-ASSESMENT-ML-Final/ml/models/model_a_default.pkl",
+  "saved_at": "2026-09-10T15:04:55.865170+00:00"
+}
