@@ -1,0 +1,14 @@
+venv/
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+mlruns/
+catboost_info/
+.optuna*
+*.log
+.DS_Store
+Thumbs.db
+data/processed/
