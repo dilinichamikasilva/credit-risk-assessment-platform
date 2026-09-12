@@ -1,0 +1,46 @@
+{
+  "model_version": "model_a_v1",
+  "task": "default_probability",
+  "target": "SeriousDlqin2yrs",
+  "features": [
+    "RevolvingUtilizationOfUnsecuredLines",
+    "age",
+    "NumberOfTime30-59DaysPastDueNotWorse",
+    "DebtRatio",
+    "MonthlyIncome",
+    "NumberOfOpenCreditLinesAndLoans",
+    "NumberOfTimes90DaysLate",
+    "NumberRealEstateLoansOrLines",
+    "NumberOfTime60-89DaysPastDueNotWorse",
+    "NumberOfDependents",
+    "MonthlyDebt",
+    "TotalLatePayments",
+    "LogIncome",
+    "LogDebtRatio"
+  ],
+  "best_params": {
+    "n_estimators": 284,
+    "max_depth": 5,
+    "learning_rate": 0.02656729425831747,
+    "subsample": 0.9208787923016158,
+    "colsample_bytree": 0.5372753218398854,
+    "min_child_weight": 12,
+    "reg_lambda": 1.2273800987852967,
+    "gamma": 3.8879928024075543e-07
+  },
+  "scale_pos_weight": 13.961527500712453,
+  "metrics": {
+    "baseline_auc": 0.8521642800249694,
+    "baseline_ks": 0.5461915491501927,
+    "tuned_auc": 0.8618617800300361,
+    "tuned_ks": 0.5669897102994289,
+    "tuned_brier": 0.04928648694703107
+  },
+  "risk_bands": {
+    "low_lt": 0.1,
+    "medium_lt": 0.35,
+    "high_ge": 0.35
+  },
+  "artifact": "C:/Users/Dilini/OneDrive/Documents/IJSE Doc/Machine Learning/ML Project/ml/models/model_a_default.pkl",
+  "saved_at": "2026-09-12T20:18:48.525491+00:00"
+}
