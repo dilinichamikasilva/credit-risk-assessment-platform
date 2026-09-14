@@ -1,0 +1,14 @@
+{
+  "model_version": "model_b_v1",
+  "task": "loan_approval",
+  "winner": "xgboost",
+  "metrics": {
+    "val_rf_f1": 0.9974937343358395,
+    "val_xgb_f1": 0.9987421383647799,
+    "test_f1": 1.0,
+    "test_auc": 1.0
+  },
+  "notes": "Near-perfect F1: loan_status is almost a CIBIL rule on this public dataset.",
+  "artifact": "C:/Users/Sithumini/Downloads/sithumini-model-b-loanAproval/ml/models/model_b_approval.pkl",
+  "saved_at": "2026-09-14T09:02:13.178385+00:00"
+}
