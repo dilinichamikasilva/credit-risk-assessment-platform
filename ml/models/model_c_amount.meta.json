@@ -1,0 +1,26 @@
+{
+  "model_version": "model_c_v1",
+  "owner": "member_4",
+  "target_transform": "log1p / expm1",
+  "pipeline": "ml.pipeline.features.LoanAmountFeatures",
+  "metrics": {
+    "val_raw": {
+      "mae": 2623931.508008794,
+      "rmse": 3530994.3333925405,
+      "mape": 18.681094355741035
+    },
+    "val_log1p": {
+      "mae": 2603138.828360553,
+      "rmse": 3480355.7057579276,
+      "mape": 18.262444169538664
+    },
+    "test": {
+      "mae": 2657977.4337406014,
+      "rmse": 3621364.533705765,
+      "mape": 18.00766580371728
+    }
+  },
+  "inference_rule": "recommended_amount = min(requested_amount, model_prediction)",
+  "notes": "loan_amount is right-skewed (train skew=0.28). Raw-scale val MAE=2,623,932; log1p val MAE=2,603,139. Keep log1p. Requested amount is not a feature. recommended_amount = min(requested_amount, model_prediction) belongs in the API.",
+  "saved_at": "2026-09-13T14:56:52.018526+00:00"
+}

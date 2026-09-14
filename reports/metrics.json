@@ -1,0 +1,13 @@
+{
+  "model_c_amount": {
+    "owner": "member_4",
+    "metric": "MAE / RMSE (currency units)",
+    "baseline_mae": 2623931.508008794,
+    "tuned_mae": 2657977.4337406014,
+    "tuned_rmse": 3621364.533705765,
+    "tuned_mape": 18.00766580371728,
+    "target_transform": "log1p",
+    "trained_on": "approved_applications_only",
+    "inference_rule": "recommended_amount = min(requested_amount, model_prediction)"
+  }
+}
