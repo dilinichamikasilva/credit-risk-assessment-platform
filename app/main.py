@@ -5,13 +5,22 @@ Run locally with:
 """
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import APP_TITLE, APP_VERSION, CORS_ALLOW_ORIGINS
+from app.db import init_db
 from app.routers import health, model_a
 
-app = FastAPI(title=APP_TITLE, version=APP_VERSION)
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    init_db()  # creates data/app.db + tables once, on server startup
+    yield
+
+#app = FastAPI(title=APP_TITLE, version=APP_VERSION)
+app = FastAPI(title=APP_TITLE, version=APP_VERSION, lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
