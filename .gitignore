@@ -12,3 +12,6 @@ catboost_info/
 .DS_Store
 Thumbs.db
 data/processed/
+.env
+*.db
+data/app.db
