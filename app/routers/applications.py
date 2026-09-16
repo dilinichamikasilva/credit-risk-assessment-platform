@@ -26,7 +26,7 @@ def update_application(
     payload: ApplicationUpdate,
     db: Session = Depends(get_db),
 ) -> ApplicationDetail:
-    """Partially update an application; unset fields stay unchanged."""
+    """Identity/reference corrections only (4.1). Assessment inputs are immutable."""
     app_row = _get_application_or_404(application_id, db)
     for field, value in payload.model_dump(exclude_unset=True).items():
         setattr(app_row, field, value)

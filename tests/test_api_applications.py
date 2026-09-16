@@ -1,4 +1,8 @@
-"""API tests for PUT/DELETE /applications/{id} - fresh in-memory DB per test."""
+"""API tests for PUT/DELETE /applications/{id} - fresh in-memory DB per test.
+
+PUT policy (leader spec 4.1): identity/reference corrections ONLY.
+Assessment inputs are immutable - non-identity fields are rejected with 422.
+"""
 from app.models_db import Application, Assessment
 
 
@@ -18,28 +22,33 @@ def _seed(session_factory, **overrides) -> int:
         return row.id
 
 
-def test_put_updates_fields_and_returns_detail(api_env):
+def test_put_updates_name_and_returns_detail(api_env):
     client, sessions = api_env
     app_id = _seed(sessions)
-    resp = client.put(f"/applications/{app_id}", json={"cibil_score": 700, "status": "assessed"})
+    resp = client.put(f"/applications/{app_id}", json={"applicant_name": "Ilma T. (corrected)"})
     assert resp.status_code == 200
     body = resp.json()
-    assert body["cibil_score"] == 700
-    assert body["status"] == "assessed"
-    assert body["loan_amount"] == 29_900_000.0  # untouched field unchanged
+    assert body["applicant_name"] == "Ilma T. (corrected)"
+    assert body["cibil_score"] == 778           # assessment inputs untouched
+    assert body["status"] == "submitted"        # system state untouched
 
 
 def test_put_unknown_id_returns_404(api_env):
     client, _ = api_env
-    resp = client.put("/applications/99999", json={"cibil_score": 700})
+    resp = client.put("/applications/99999", json={"applicant_name": "Nobody"})
     assert resp.status_code == 404
 
 
-def test_put_invalid_payload_returns_422(api_env):
-    client, sessions = api_env
-    app_id = _seed(sessions)
-    resp = client.put(f"/applications/{app_id}", json={"cibil_score": 99999})
-    assert resp.status_code == 422
+def test_put_rejects_editing_assessment_inputs(api_env):
+    client, _ = api_env
+    resp = client.put("/applications/1", json={"cibil_score": 700})
+    assert resp.status_code == 422              # extra="forbid" - inputs are immutable
+
+
+def test_put_rejects_empty_name(api_env):
+    client, _ = api_env
+    resp = client.put("/applications/1", json={"applicant_name": ""})
+    assert resp.status_code == 422              # min_length=1
 
 
 def test_put_empty_body_changes_nothing(api_env):
