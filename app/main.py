@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import APP_TITLE, APP_VERSION, CORS_ALLOW_ORIGINS
 from app.db import init_db
-from app.routers import health, model_a, model_c, assessment, applications, analytics
+from app.routers import health, model_a, model_c,model_b, assessment, applications, analytics
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -32,11 +32,8 @@ app.add_middleware(
 
 app.include_router(health.router)
 app.include_router(model_a.router)
+app.include_router(model_b.router)
 app.include_router(model_c.router)
 app.include_router(assessment.router)
 app.include_router(applications.router)
 app.include_router(analytics.router)
-
-# Model B standalone router is owned by Sithumini:
-# from app.routers import model_b
-# app.include_router(model_b.router)
