@@ -7,9 +7,9 @@ from pydantic import BaseModel, Field
 
 
 class LoanApprovalRequest(BaseModel):
-    no_of_dependents: int = Field(ge=0)
-    education: str
-    self_employed: str
+    no_of_dependents: int = Field(ge=0, le=20)
+    education: Literal["Graduate", "Not Graduate"]
+    self_employed: Literal["Yes", "No"]
     income_annum: float = Field(gt=0)
     loan_amount: float = Field(gt=0)
     loan_term: int = Field(gt=0)

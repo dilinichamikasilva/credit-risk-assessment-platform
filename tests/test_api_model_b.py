@@ -45,3 +45,17 @@ def test_model_b_rejects_invalid_cibil_score():
     payload["cibil_score"] = 950
     response = client.post("/predict/loan-approval", json=payload)
     assert response.status_code == 422
+
+
+def test_model_b_rejects_invalid_education():
+    payload = dict(SAMPLE_PAYLOAD)
+    payload["education"] = "graduate"  # wrong case - not a valid category
+    response = client.post("/predict/loan-approval", json=payload)
+    assert response.status_code == 422
+
+
+def test_model_b_rejects_invalid_self_employed():
+    payload = dict(SAMPLE_PAYLOAD)
+    payload["self_employed"] = "Maybe"
+    response = client.post("/predict/loan-approval", json=payload)
+    assert response.status_code == 422

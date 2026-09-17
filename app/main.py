@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import APP_TITLE, APP_VERSION, CORS_ALLOW_ORIGINS
 from app.db import init_db
-from app.routers import health, model_a, model_c,model_b, assessment, applications, analytics
+from app.routers import health, model_a, model_b, model_c, assessment, applications, analytics
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
