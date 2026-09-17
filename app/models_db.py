@@ -16,12 +16,12 @@ class Application(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     applicant_name: Mapped[str] = mapped_column(String(120))
     no_of_dependents: Mapped[int] = mapped_column(Integer, default=0)
-    education: Mapped[str] = mapped_column(String(20))            # Graduate / Not Graduate
-    self_employed: Mapped[str] = mapped_column(String(5))         # Yes / No
-    income_annum: Mapped[float] = mapped_column(Float)
-    loan_amount: Mapped[float] = mapped_column(Float)
-    loan_term: Mapped[int] = mapped_column(Integer)               # years
-    cibil_score: Mapped[int] = mapped_column(Integer)
+    education: Mapped[str | None] = mapped_column(String(20), nullable=True)   # thin predict-created records may omit
+    self_employed: Mapped[str | None] = mapped_column(String(5), nullable=True)
+    income_annum: Mapped[float | None] = mapped_column(Float, nullable=True)
+    loan_amount: Mapped[float | None] = mapped_column(Float, nullable=True)
+    loan_term: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    cibil_score: Mapped[int | None] = mapped_column(Integer, nullable=True)
     residential_assets_value: Mapped[float] = mapped_column(Float, default=0.0)
     commercial_assets_value: Mapped[float] = mapped_column(Float, default=0.0)
     luxury_assets_value: Mapped[float] = mapped_column(Float, default=0.0)

@@ -5,8 +5,7 @@ from typing import Any
 
 from sqlalchemy.orm import Session
 
-from app.models_db import Assessment
-
+from app.models_db import Assessment, Application
 
 def save_assessment(
     db: Session,
@@ -30,4 +29,15 @@ def save_assessment(
     db.add(row)
     db.commit()
     db.refresh(row)
+    return row
+
+
+def get_or_create_application(db: Session, *, applicant_name: str) -> Application:
+    """Predict routers: link assessments to one stable applicant record."""
+    row = db.query(Application).filter(Application.applicant_name == applicant_name).first()
+    if row is None:
+        row = Application(applicant_name=applicant_name)
+        db.add(row)
+        db.commit()
+        db.refresh(row)
     return row

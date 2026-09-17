@@ -4,8 +4,7 @@ from sqlalchemy.orm import sessionmaker
 
 from app.db import Base
 from app.models_db import Application, Assessment
-from app.services.persistence import save_assessment
-
+from app.services.persistence import save_assessment, get_or_create_application
 
 def _db():
     engine = create_engine("sqlite://")  # fresh in-memory DB per test
@@ -59,3 +58,26 @@ def test_cascade_delete():
     db.commit()
     assert db.scalar(select(Assessment)) is None
     assert db.get(Application, app_row.id) is None
+
+
+def test_thin_application_create_for_predict_linking():
+    db = _db()
+    row = Application(applicant_name="Thin Record")
+    db.add(row)
+    db.commit()
+    assert row.id is not None
+    assert row.cibil_score is None
+
+def test_get_or_create_application_reuses_same_name():
+    db = _db()
+    first = get_or_create_application(db, applicant_name="Ilma")
+    second = get_or_create_application(db, applicant_name="Ilma")
+    assert first.id == second.id              # reused, NOT duplicated
+    assert db.query(Application).count() == 1  # exactly one row exists
+
+
+def test_get_or_create_application_creates_new_name():
+    db = _db()
+    row = get_or_create_application(db, applicant_name="New Person")
+    assert row.id is not None
+    assert row.cibil_score is None            # thin record: loan fields empty

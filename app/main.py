@@ -12,7 +12,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import APP_TITLE, APP_VERSION, CORS_ALLOW_ORIGINS
 from app.db import init_db
-from app.routers import health, model_a
+from app.routers import health, model_a, applications, analytics
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
@@ -32,6 +32,8 @@ app.add_middleware(
 
 app.include_router(health.router)
 app.include_router(model_a.router)
+app.include_router(applications.router)
+app.include_router(analytics.router)
 
 # Model B / C / full-assessment routers are added here by their owners:
 # from app.routers import model_b, model_c, assessment
