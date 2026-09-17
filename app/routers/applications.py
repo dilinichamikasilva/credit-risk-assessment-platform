@@ -20,6 +20,16 @@ def _get_application_or_404(application_id: int, db: Session) -> Application:
     return row
 
 
+@router.get("/applications/{application_id}", response_model=ApplicationDetail)
+def get_application(
+    application_id: int,
+    db: Session = Depends(get_db),
+) -> ApplicationDetail:
+    """One applicant's full record, including every assessment ever run (Sasuni)."""
+    app_row = _get_application_or_404(application_id, db)
+    return ApplicationDetail.model_validate(app_row)
+
+
 @router.put("/applications/{application_id}", response_model=ApplicationDetail)
 def update_application(
     application_id: int,

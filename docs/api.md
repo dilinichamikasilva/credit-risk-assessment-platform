@@ -23,6 +23,9 @@ Run: `uvicorn app.main:app --reload`  |  Tests: `python -m pytest tests/ -q`
 | GET | `/health` | Service + model availability | 200 | — |
 | GET | `/model-info` | Version/task/metrics per loaded model | 200 | — |
 | POST | `/predict/default-probability` | Model A: default probability + risk band | 200 | 422, 503 |
+| POST | `/predict/recommended-amount` | Model C: recommended amount (capped at requested) | 200 | 422, 503 |
+| POST | `/predict/full-assessment` | Flagship: run A+B+C together, always saved | 200 | 422, 503 |
+| GET | `/applications/{id}` | One applicant's full record incl. every assessment | 200 | 404 |
 | PUT | `/applications/{id}` | Identity/reference fix only (e.g. name typo) — assessment inputs are immutable | 200 | 404, 422 |
 | DELETE | `/applications/{id}` | Delete applicant; cascade-deletes all their assessments | 204 | 404 |
 | GET | `/analytics/summary` | Aggregates: volume, risk distribution, avg probability | 200 | — |
@@ -32,10 +35,7 @@ Run: `uvicorn app.main:app --reload`  |  Tests: `python -m pytest tests/ -q`
 | Method | Path | Purpose | Owner |
 |---|---|---|---|
 | POST | `/predict/loan-approval` | Model B; creates/links application, logs assessment | Sithumini |
-| POST | `/predict/recommended-amount` | Model C; creates/links application, logs assessment | Sasuni |
-| POST | `/predict/full-assessment` | One application + all 3 assessments (A+B+C) in one call | Sasuni |
 | GET | `/applications` | List applicants, newest first, with assessment counts | Sithumini |
-| GET | `/applications/{id}` | One applicant's full record incl. every assessment | Sasuni |
 
 ## Examples
 
@@ -69,6 +69,66 @@ Response (200):
 ```
 
 Missing/invalid fields → 422; model artifacts not trained/committed → 503.
+
+### POST /predict/recommended-amount (Sasuni / Model C)
+
+```json
+{
+  "no_of_dependents": 2,
+  "education": "Graduate",
+  "self_employed": "No",
+  "income_annum": 9600000,
+  "loan_term": 12,
+  "cibil_score": 778,
+  "residential_assets_value": 2400000,
+  "commercial_assets_value": 17600000,
+  "luxury_assets_value": 22700000,
+  "bank_asset_value": 8000000,
+  "requested_amount": 20000000,
+  "applicant_name": "Demo Applicant"
+}
+```
+
+Response (200):
+
+```json
+{
+  "recommended_amount": 20000000,
+  "predicted_amount": 29266544,
+  "capped_at_requested": true,
+  "model_version": "model_c_v1",
+  "application_id": 1
+}
+```
+
+`requested_amount` is **not** a model feature — it only drives
+`recommended_amount = min(requested_amount, predicted_amount)`.
+Omit `applicant_name` to skip persistence (`application_id` is then `null`).
+
+### POST /predict/full-assessment (Sasuni / flagship)
+
+Requires `applicant_name` and fields for Models A + B + C. Always creates (or
+reuses) one application and logs three assessment rows. Response shape:
+
+```json
+{
+  "application_id": 1,
+  "default": { "probability": 0.08, "risk_band": "low", "model_version": "model_a_v1" },
+  "approval": { "approved": true, "approval_probability": 0.99, "model_version": "model_b_v1" },
+  "amount": {
+    "recommended_amount": 20000000,
+    "predicted_amount": 29266544,
+    "capped_at_requested": true,
+    "model_version": "model_c_v1",
+    "application_id": 1
+  }
+}
+```
+
+### GET /applications/1 (Sasuni)
+
+Returns `ApplicationDetail` including the nested `assessments` list (inputs +
+outputs for every model run). Unknown id → `404`.
 
 ### PUT /applications/1 — identity/reference corrections ONLY
 
