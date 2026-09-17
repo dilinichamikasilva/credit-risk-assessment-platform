@@ -1,6 +1,25 @@
 import { Link } from "react-router-dom";
 
-const TOOLS = [
+const PRIMARY = [
+  {
+    icon: "🧾",
+    title: "New Assessment",
+    desc: "One form → default risk, approval, and recommended amount in a single saved report.",
+    to: "/assessment",
+    ready: true,
+    cta: "Start assessment →",
+  },
+  {
+    icon: "📊",
+    title: "Dashboard",
+    desc: "Volume, risk mix, and model usage across every assessment run.",
+    to: "/dashboard",
+    ready: true,
+    cta: "Open dashboard →",
+  },
+];
+
+const ADVANCED = [
   {
     icon: "📉",
     title: "Default Risk",
@@ -17,8 +36,9 @@ const TOOLS = [
   {
     icon: "💰",
     title: "Recommended Amount",
-    desc: "Suggest a safe loan amount based on the applicant's profile.",
-    ready: false,
+    desc: "Suggest a safe loan amount, automatically capped at the requested amount.",
+    to: "/recommended-amount",
+    ready: true,
   },
 ];
 
@@ -27,22 +47,42 @@ export default function Home() {
     <div>
       <div className="hero">
         <h1>
-          Smarter lending decisions, <span className="accent">one click away</span>
+          See the full risk picture, <span className="accent">in one view</span>
         </h1>
         <p>
-          Three ML-powered tools to assess default risk, loan approval, and
-          recommended loan amounts &mdash; built on one shared feature pipeline.
+          Enter an applicant once and get default risk, approval, and a recommended
+          loan amount together — backed by three trained models and a shared feature pipeline.
         </p>
+        <div className="hero-actions">
+          <Link to="/assessment" className="hero-cta">
+            New assessment
+          </Link>
+          <Link to="/dashboard" className="hero-cta ghost">
+            View dashboard
+          </Link>
+        </div>
       </div>
 
       <div className="feature-grid">
-        {TOOLS.map((tool) =>
+        {PRIMARY.map((tool) => (
+          <Link key={tool.title} to={tool.to} className="feature-card active featured">
+            <span className="feature-icon">{tool.icon}</span>
+            <h3>{tool.title}</h3>
+            <p>{tool.desc}</p>
+            <span className="pill ready">{tool.cta}</span>
+          </Link>
+        ))}
+      </div>
+
+      <h2 className="section-heading">Advanced tools</h2>
+      <div className="feature-grid">
+        {ADVANCED.map((tool) =>
           tool.ready ? (
             <Link key={tool.title} to={tool.to} className="feature-card active">
               <span className="feature-icon">{tool.icon}</span>
               <h3>{tool.title}</h3>
               <p>{tool.desc}</p>
-              <span className="pill ready">Try it &rarr;</span>
+              <span className="pill ready">Try it →</span>
             </Link>
           ) : (
             <div key={tool.title} className="feature-card disabled">
