@@ -44,6 +44,12 @@ export default function Navbar() {
         >
           Recommended Amount
         </NavLink>
+        <NavLink
+          to="/model-info"
+          className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+        >
+          Model Info
+        </NavLink>
       </div>
     </nav>
   );
