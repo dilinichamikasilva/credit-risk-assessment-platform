@@ -9,17 +9,17 @@ import SelectField from "../components/forms/SelectField";
 
 const INITIAL_VALUES = {
   applicant_name: "",
-  no_of_dependents: "2",
+  no_of_dependents: "",
   education: "Graduate",
   self_employed: "No",
-  income_annum: "2400000",
-  loan_term: "36",
-  crib_score: "720",
-  residential_assets_value: "9000000",
-  commercial_assets_value: "0",
-  luxury_assets_value: "1500000",
-  bank_asset_value: "1200000",
-  requested_amount: "3500000",
+  income_annum: "",
+  loan_term: "",
+  crib_score: "",
+  residential_assets_value: "",
+  commercial_assets_value: "",
+  luxury_assets_value: "",
+  bank_asset_value: "",
+  requested_amount: "",
 };
 
 export default function RecommendedAmountPage() {
