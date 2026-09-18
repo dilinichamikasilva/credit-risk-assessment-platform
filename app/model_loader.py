@@ -61,3 +61,11 @@ def available_models() -> list[str]:
 
 def get_model_a() -> LoadedModel:
     return get_model("model_a")
+
+
+def get_model_b() -> LoadedModel:
+    return get_model("model_b")
+
+
+def get_model_c() -> LoadedModel:
+    return get_model("model_c")
