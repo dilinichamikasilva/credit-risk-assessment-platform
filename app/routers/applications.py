@@ -29,6 +29,36 @@ def get_application(
     app_row = _get_application_or_404(application_id, db)
     return ApplicationDetail.model_validate(app_row)
 
+@router.get("/applications",response_model=list[ApplicationDetail],summary="Get applications")
+def get_applications(
+        limit: int = 100,
+        offset: int = 0,
+        db: Session = Depends(get_db),
+) -> list[ApplicationDetail]:
+    """ Return a list of applications for the frontend """
+    # Validate pagination values.
+    if limit < 1:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="limit must be greater than 0",
+        )
+
+    if offset < 0:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="offset cannot be negative",
+        )
+    applications = (
+        db.query(Application)
+        .order_by(Application.id.desc())
+        .offset(offset)
+        .limit(limit)
+        .all()
+    )
+    return [
+        ApplicationDetail.model_validate(application)
+        for application in applications
+    ]
 
 @router.put("/applications/{application_id}", response_model=ApplicationDetail)
 def update_application(
