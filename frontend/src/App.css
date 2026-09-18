@@ -679,3 +679,36 @@
   font-family: var(--font-heading);
   font-weight: 700;
 }
+
+/* --- Application detail page (ilma) --- */
+.detail-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0.75rem 1.25rem;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.detail-grid div { display: flex; flex-direction: column; gap: 0.15rem; }
+.app-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin: 0.5rem 0; }
+.rename-row { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center; }
+.rename-row input {
+  padding: 0.45rem 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.json-block {
+  background: #0f172a;
+  color: #e2e8f0;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.78rem;
+  overflow-x: auto;
+  margin: 0.4rem 0;
+}
+
+.submit-btn.ghost-btn { background: transparent; color: inherit; border: 1px solid #cbd5e1; }
+.submit-btn.danger-btn { background: #dc2626; }
+
+/* End of Application detail page (ilma) */
