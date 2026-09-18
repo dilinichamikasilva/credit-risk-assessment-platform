@@ -12,7 +12,7 @@ const INITIAL_VALUES = {
   applicant_name: "",
   no_of_dependents: "",
   education: "Graduate",
-  self_employed: "",
+  self_employed: "No",
   income_annum: "",
   loan_amount: "",
   loan_term: "",

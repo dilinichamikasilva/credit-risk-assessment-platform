@@ -127,7 +127,7 @@ export default function HistoryPage() {
                           {application.status || "submitted"}
                         </span>
                       </td>
-                      <td>{application.assessment_count ?? application.assessments_count ?? "—"}</td>
+                      <td>{application.assessments?.length ?? 0}</td>
                       <td>
                         {application.created_at
                           ? new Date(application.created_at).toLocaleDateString()
