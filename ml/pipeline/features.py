@@ -34,7 +34,7 @@ LOAN_FEATURE_LABELS = {
     "income_annum": "Annual income",
     "loan_amount": "Requested loan amount",
     "loan_term": "Loan term (months)",
-    "cibil_score": "CIBIL credit score",
+    "crib_score": "CRIB credit score",
     "residential_assets_value": "Residential assets",
     "commercial_assets_value": "Commercial assets",
     "luxury_assets_value": "Luxury assets",
@@ -43,7 +43,7 @@ LOAN_FEATURE_LABELS = {
     "loan_to_income": "Loan-to-income ratio",
     "asset_coverage_ratio": "Asset coverage of the loan",
     "assets_to_income": "Assets-to-income ratio",
-    "risk_tier": "CIBIL risk tier",
+    "risk_tier": "CRIB risk tier (project bands)",
 }
 
 # API / notebook aliases -> canonical Give Me Some Credit names
@@ -91,7 +91,7 @@ LOAN_REQUIRED_COLS = [
     "self_employed",
     "income_annum",
     "loan_term",
-    "cibil_score",
+    "crib_score",
     "residential_assets_value",
     "commercial_assets_value",
     "luxury_assets_value",
@@ -105,8 +105,24 @@ ASSET_COLS = [
     "bank_asset_value",
 ]
 
-RISK_TIER_BINS = [-1, 579, 669, 739, 900]
+# Official CRIB Score range is 250–900 (CRIB Score Reference Guide / crib.lk FAQs).
+CRIB_SCORE_MIN = 250
+CRIB_SCORE_MAX = 900
+# Project-defined Poor/Fair/Good/Excellent bands over that range — NOT official CRIB letter grades.
+RISK_TIER_BINS = [249, 549, 649, 749, 900]
 RISK_TIER_LABELS = ["Poor", "Fair", "Good", "Excellent"]
+
+
+def crib_risk_tier(score: int | float) -> str:
+    """Map a CRIB score to the project's display tier (aligned with RISK_TIER_BINS)."""
+    s = int(score)
+    if s <= 549:
+        return "Poor"
+    if s <= 649:
+        return "Fair"
+    if s <= 749:
+        return "Good"
+    return "Excellent"
 
 
 def _as_frame(X) -> pd.DataFrame:
@@ -223,7 +239,7 @@ class LoanApprovalFeatures(BaseEstimator, TransformerMixin):
         X["no_of_dependents"] = X["no_of_dependents"].fillna(0).clip(lower=0)
         X["income_annum"] = X["income_annum"].clip(lower=1)
         X["loan_term"] = X["loan_term"].clip(lower=1)
-        X["cibil_score"] = X["cibil_score"].clip(lower=300, upper=900)
+        X["crib_score"] = X["crib_score"].clip(lower=CRIB_SCORE_MIN, upper=CRIB_SCORE_MAX)
 
         for col in ASSET_COLS:
             X[col] = X[col].fillna(0).clip(lower=0)
@@ -231,7 +247,7 @@ class LoanApprovalFeatures(BaseEstimator, TransformerMixin):
         X["total_assets"] = X[ASSET_COLS].sum(axis=1)
         X["assets_to_income"] = X["total_assets"] / X["income_annum"]
         X["risk_tier"] = pd.cut(
-            X["cibil_score"],
+            X["crib_score"],
             bins=RISK_TIER_BINS,
             labels=RISK_TIER_LABELS,
         ).astype("string")
@@ -242,7 +258,7 @@ class LoanApprovalFeatures(BaseEstimator, TransformerMixin):
             "self_employed",
             "income_annum",
             "loan_term",
-            "cibil_score",
+            "crib_score",
             *ASSET_COLS,
             "total_assets",
             "assets_to_income",
@@ -259,7 +275,7 @@ class LoanApprovalFeatures(BaseEstimator, TransformerMixin):
                 "income_annum",
                 "loan_amount",
                 "loan_term",
-                "cibil_score",
+                "crib_score",
                 *ASSET_COLS,
                 "total_assets",
                 "loan_to_income",
@@ -278,7 +294,7 @@ class LoanApprovalFeatures(BaseEstimator, TransformerMixin):
                     "income_annum",
                     "loan_amount",
                     "loan_term",
-                    "cibil_score",
+                    "crib_score",
                     *ASSET_COLS,
                     "total_assets",
                     "loan_to_income",
@@ -294,7 +310,7 @@ class LoanApprovalFeatures(BaseEstimator, TransformerMixin):
                 "self_employed",
                 "income_annum",
                 "loan_term",
-                "cibil_score",
+                "crib_score",
                 *ASSET_COLS,
                 "total_assets",
                 "assets_to_income",

@@ -2,12 +2,30 @@
   "model_c_amount": {
     "owner": "member_4",
     "metric": "MAE / RMSE (currency units)",
-    "baseline_mae": 2623931.508008794,
-    "tuned_mae": 2657977.4337406014,
-    "tuned_rmse": 3621364.533705765,
-    "tuned_mape": 18.00766580371728,
-    "target_transform": "log1p",
+    "baseline_mae": 771205.706536788,
+    "tuned_mae": 855780.8210900474,
+    "tuned_rmse": 1155676.4342481778,
+    "tuned_mape": 67.67935896919157,
+    "target_transform": "raw",
     "trained_on": "approved_applications_only",
     "inference_rule": "recommended_amount = min(requested_amount, model_prediction)"
+  },
+  "model_b_approval": {
+    "owner": "retrain_lk",
+    "metric": "F1 / AUC",
+    "test_f1": 0.8223880597014925,
+    "test_auc": 0.7583541942187795,
+    "winner": "random_forest",
+    "model_version": "model_b_v2_lk",
+    "data": "synthetic_lk"
+  },
+  "model_a_default": {
+    "owner": "retrain_lk",
+    "metric": "AUC-ROC / KS",
+    "baseline_auc": 0.7529985813991118,
+    "tuned_auc": 0.7485944408951031,
+    "tuned_ks": 0.37396055660339667,
+    "model_version": "model_a_v2_lk",
+    "data": "synthetic_lk"
   }
 }

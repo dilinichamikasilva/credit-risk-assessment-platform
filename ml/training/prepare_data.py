@@ -16,7 +16,14 @@ import json
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from ml.config import DATA_PROCESSED, DATA_RAW, RANDOM_STATE, ensure_dirs
+from ml.config import (
+    DATA_PROCESSED,
+    DATA_RAW,
+    DEFAULT_FILES,
+    LOAN_FILE,
+    RANDOM_STATE,
+    ensure_dirs,
+)
 from ml.pipeline.features import strip_loan_frame
 
 FIRST_SPLIT = dict(test_size=0.30, random_state=RANDOM_STATE)
@@ -41,11 +48,13 @@ def _two_stage_split(X, y, stratify_first, second_stratifier=None):
 
 
 def _default_csv():
-    for name in ('credit_risk_dataset.csv', 'credit_risk_dataset_1.csv'):
+    for name in DEFAULT_FILES:
         path = DATA_RAW / name
         if path.exists():
             return path
-    raise FileNotFoundError('credit risk dataset not found in data/raw/')
+    raise FileNotFoundError(
+        f'credit risk dataset not found in data/raw/; expected one of {DEFAULT_FILES}'
+    )
 
 
 def build_default_splits() -> dict:
@@ -74,9 +83,13 @@ def build_default_splits() -> dict:
 
 
 def build_loan_splits() -> dict:
-    path = DATA_RAW / 'loan_approval_dataset.csv'
+    path = DATA_RAW / LOAN_FILE
+    if not path.exists():
+        raise FileNotFoundError(f'{LOAN_FILE} not found in data/raw/')
     loan_df = strip_loan_frame(pd.read_csv(path))
     print(f'Models B/C source: {path.name} (strip_loan_frame applied)')
+    if 'crib_score' not in loan_df.columns:
+        raise ValueError('Expected crib_score column in Sri Lankan loan CSV')
 
     # ---- Model B: approve / reject on ALL rows (same encoding as notebook 03) ----
     y_b = (loan_df['loan_status'] == 'Approved').astype(int)

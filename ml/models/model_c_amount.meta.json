@@ -1,26 +1,43 @@
 {
-  "model_version": "model_c_v1",
+  "model_version": "model_c_v2_lk",
   "owner": "member_4",
-  "target_transform": "log1p / expm1",
+  "task": "recommended_loan_amount",
+  "target": "loan_amount (Approved applications only)",
+  "currency": "LKR",
+  "score_field": "crib_score",
+  "data_provenance": "synthetic, calibrated to CRIB Score 250-900 (crib.lk) and DCS HIES 2019 income anchors with mid-2020s LKR retail bands \u2014 NOT real applicant records. See reports/phase0_sri_lanka_research.md.",
   "pipeline": "ml.pipeline.features.LoanAmountFeatures",
+  "target_transform": "none",
+  "split_source": "data/processed (Member 1)",
+  "split": {
+    "train": 2951,
+    "val": 632,
+    "test": 633
+  },
   "metrics": {
     "val_raw": {
-      "mae": 2623931.508008794,
-      "rmse": 3530994.3333925405,
-      "mape": 18.681094355741035
+      "mae": 771205.706536788,
+      "rmse": 1035882.2958464485,
+      "mape": 61.76191025401825
     },
     "val_log1p": {
-      "mae": 2603138.828360553,
-      "rmse": 3480355.7057579276,
-      "mape": 18.262444169538664
+      "mae": 789031.7281447785,
+      "rmse": 1089542.4837715158,
+      "mape": 54.70892268162697
+    },
+    "val": {
+      "mae": 771205.706536788,
+      "rmse": 1035882.2958464485,
+      "mape": 61.76191025401825
     },
     "test": {
-      "mae": 2657977.4337406014,
-      "rmse": 3621364.533705765,
-      "mape": 18.00766580371728
+      "mae": 855780.8210900474,
+      "rmse": 1155676.4342481778,
+      "mape": 67.67935896919157
     }
   },
   "inference_rule": "recommended_amount = min(requested_amount, model_prediction)",
-  "notes": "loan_amount is right-skewed (train skew=0.28). Raw-scale val MAE=2,623,932; log1p val MAE=2,603,139. Keep log1p. Requested amount is not a feature. recommended_amount = min(requested_amount, model_prediction) belongs in the API.",
-  "saved_at": "2026-09-13T14:56:52.018526+00:00"
+  "notes": "synthetic, calibrated to CRIB Score 250-900 (crib.lk) and DCS HIES 2019 income anchors with mid-2020s LKR retail bands \u2014 NOT real applicant records. See reports/phase0_sri_lanka_research.md. Amounts are LKR. loan_amount is right-skewed (train skew=2.38). A raw-scale XGBRegressor had val MAE 771,206; the same booster with log1p/expm1 had val MAE 789,032. We keep the raw target. The requested amount is never a feature. recommended_amount = min(requested_amount, model_prediction) belongs in the API.",
+  "saved_at": "2026-09-18T15:35:59.642565+00:00",
+  "artifact": "E:/ML/CREDIT-RISK-ASSESMENT-ML-Final/ml/models/model_c_amount.pkl"
 }
