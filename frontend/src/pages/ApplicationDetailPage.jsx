@@ -250,6 +250,10 @@ export default function ApplicationDetailPage() {
           </span>{" "}
           submitted {formatDate(application.created_at)}
         </p>
+        <p className="data-disclosure">
+          Models trained on synthetic Sri Lankan data (calibrated to CRIB / DCS HIES anchors)
+          as of September 2026 — indicative only, not a substitute for a real credit decision.
+        </p>
       </div>
 
       {actionError && (
@@ -271,7 +275,7 @@ export default function ApplicationDetailPage() {
           <div><span className="muted">Income / annum</span><strong>{formatCurrency(application.income_annum)}</strong></div>
           <div><span className="muted">Loan amount</span><strong>{formatCurrency(application.loan_amount)}</strong></div>
           <div><span className="muted">Loan term (months)</span><strong>{application.loan_term ?? "—"}</strong></div>
-          <div><span className="muted">CIBIL score</span><strong>{application.cibil_score ?? "—"}</strong></div>
+          <div><span className="muted">CRIB score</span><strong>{application.crib_score ?? "—"}</strong></div>
           <div><span className="muted">Dependents</span><strong>{application.no_of_dependents}</strong></div>
           <div><span className="muted">Last updated</span><strong>{formatDate(application.updated_at)}</strong></div>
         </div>

@@ -5,12 +5,12 @@ from app.main import app
 client = TestClient(app)
 
 SAMPLE_PAYLOAD = {
-    "revolving_utilization": 0.3,
-    "age": 45,
+    "revolving_utilization": 0.25,
+    "age": 42,
     "times_30_59_days_late": 0,
-    "debt_ratio": 0.35,
-    "monthly_income": 5000,
-    "open_credit_lines": 6,
+    "debt_ratio": 0.28,
+    "monthly_income": 150_000,
+    "open_credit_lines": 5,
     "times_90_days_late": 0,
     "real_estate_loans": 1,
     "times_60_89_days_late": 0,

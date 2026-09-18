@@ -7,10 +7,10 @@ def _seed_once(session_factory) -> None:
     with session_factory() as db:
         a1 = Application(applicant_name="A", education="Graduate", self_employed="No",
                          income_annum=1_000_000, loan_amount=500_000, loan_term=10,
-                         cibil_score=800, status="assessed")
+                         crib_score=800, status="assessed")
         a2 = Application(applicant_name="B", education="Not Graduate", self_employed="Yes",
                          income_annum=500_000, loan_amount=200_000, loan_term=5,
-                         cibil_score=500, status="submitted")
+                         crib_score=500, status="submitted")
         db.add_all([a1, a2])
         db.commit()
         save_assessment(db, model_key="model_a", model_version="model_a_v1",

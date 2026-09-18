@@ -27,8 +27,10 @@ from xgboost import XGBRegressor
 
 from ml.config import (
     DATA_PROCESSED,
+    DATA_PROVENANCE_NOTE,
     DATA_RAW,
     FIGURES_DIR,
+    LOAN_FILE,
     MODEL_C_VERSION,
     MODELS_DIR,
     RANDOM_STATE,
@@ -43,10 +45,10 @@ INFERENCE_RULE = "recommended_amount = min(requested_amount, model_prediction)"
 
 
 def _find_loan_csv() -> Path:
-    for path in (DATA_RAW / "loan_approval_dataset.csv", ROOT / "loan_approval_dataset.csv"):
+    for path in (DATA_RAW / LOAN_FILE, ROOT / LOAN_FILE):
         if path.exists():
             return path
-    raise FileNotFoundError("loan_approval_dataset.csv not found")
+    raise FileNotFoundError(f"{LOAN_FILE} not found")
 
 
 def load_amount_split():
@@ -200,6 +202,7 @@ def main() -> None:
         print(f"SHAP skipped: {exc}")
 
     log_note = (
+        f"{DATA_PROVENANCE_NOTE} Amounts are LKR. "
         f"loan_amount is right-skewed (train skew={float(y_train.skew()):.2f}). "
         f"A raw-scale XGBRegressor had val MAE {raw_val['mae']:,.0f}; "
         f"the same booster with log1p/expm1 had val MAE {log_val['mae']:,.0f}. "
@@ -216,6 +219,9 @@ def main() -> None:
         "owner": "member_4",
         "task": "recommended_loan_amount",
         "target": "loan_amount (Approved applications only)",
+        "currency": "LKR",
+        "score_field": "crib_score",
+        "data_provenance": DATA_PROVENANCE_NOTE,
         "pipeline": "ml.pipeline.features.LoanAmountFeatures",
         "target_transform": "log1p / expm1" if use_log else "none",
         "split_source": source,

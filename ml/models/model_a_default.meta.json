@@ -1,46 +1,35 @@
 {
-  "model_version": "model_a_v1",
+  "model_version": "model_a_v2_lk",
   "task": "default_probability",
   "target": "SeriousDlqin2yrs",
-  "features": [
-    "RevolvingUtilizationOfUnsecuredLines",
-    "age",
-    "NumberOfTime30-59DaysPastDueNotWorse",
-    "DebtRatio",
-    "MonthlyIncome",
-    "NumberOfOpenCreditLinesAndLoans",
-    "NumberOfTimes90DaysLate",
-    "NumberRealEstateLoansOrLines",
-    "NumberOfTime60-89DaysPastDueNotWorse",
-    "NumberOfDependents",
-    "MonthlyDebt",
-    "TotalLatePayments",
-    "LogIncome",
-    "LogDebtRatio"
-  ],
+  "currency": "LKR",
+  "data_provenance": "synthetic, calibrated to CRIB Score 250-900 (crib.lk) and DCS HIES 2019 income anchors with mid-2020s LKR retail bands \u2014 NOT real applicant records. See reports/phase0_sri_lanka_research.md.",
+  "notes": "synthetic, calibrated to CRIB Score 250-900 (crib.lk) and DCS HIES 2019 income anchors with mid-2020s LKR retail bands \u2014 NOT real applicant records. See reports/phase0_sri_lanka_research.md. MonthlyIncome is in LKR. Target is a multi-factor synthetic delinquency label (not a single hard rule).",
   "best_params": {
-    "n_estimators": 284,
-    "max_depth": 5,
-    "learning_rate": 0.02656729425831747,
-    "subsample": 0.9208787923016158,
-    "colsample_bytree": 0.5372753218398854,
-    "min_child_weight": 12,
-    "reg_lambda": 1.2273800987852967,
-    "gamma": 3.8879928024075543e-07
+    "n_estimators": 374,
+    "max_depth": 6,
+    "learning_rate": 0.024727393889944098,
+    "subsample": 0.8390862088098531,
+    "colsample_bytree": 0.5149271012635479,
+    "min_child_weight": 6,
+    "reg_lambda": 2.1878886915898126,
+    "gamma": 1.0234151273131597e-07
   },
-  "scale_pos_weight": 13.961527500712453,
+  "scale_pos_weight": 2.3540967896502156,
+  "split_source": "data/processed",
   "metrics": {
-    "baseline_auc": 0.8521642800249694,
-    "baseline_ks": 0.5461915491501927,
-    "tuned_auc": 0.8618617800300361,
-    "tuned_ks": 0.5669897102994289,
-    "tuned_brier": 0.04928648694703107
+    "baseline_auc": 0.7529985813991118,
+    "baseline_ks": 0.3727665531423131,
+    "raw_auc": 0.7493759523322492,
+    "tuned_auc": 0.7485944408951031,
+    "tuned_ks": 0.37396055660339667,
+    "tuned_brier": 0.17208020042142932
   },
   "risk_bands": {
     "low_lt": 0.1,
     "medium_lt": 0.35,
     "high_ge": 0.35
   },
-  "artifact": "C:/Users/Dilini/OneDrive/Documents/IJSE Doc/Machine Learning/ML Project/ml/models/model_a_default.pkl",
-  "saved_at": "2026-09-12T20:18:48.525491+00:00"
+  "saved_at": "2026-09-18T15:35:40.744355+00:00",
+  "artifact": "E:/ML/CREDIT-RISK-ASSESMENT-ML-Final/ml/models/model_a_default.pkl"
 }

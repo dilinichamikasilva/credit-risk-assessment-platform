@@ -19,17 +19,17 @@ const INT_FIELDS = new Set([
   "dependents",
   "no_of_dependents",
   "loan_term",
-  "cibil_score",
+  "crib_score",
 ]);
 
 const INITIAL_VALUES = {
   applicant_name: "Demo Applicant",
-  revolving_utilization: "0.3",
-  age: "45",
+  revolving_utilization: "0.25",
+  age: "42",
   times_30_59_days_late: "0",
-  debt_ratio: "0.35",
-  monthly_income: "5000",
-  open_credit_lines: "6",
+  debt_ratio: "0.28",
+  monthly_income: "150000",
+  open_credit_lines: "5",
   times_90_days_late: "0",
   real_estate_loans: "1",
   times_60_89_days_late: "0",
@@ -37,14 +37,14 @@ const INITIAL_VALUES = {
   no_of_dependents: "2",
   education: "Graduate",
   self_employed: "No",
-  income_annum: "9600000",
-  loan_amount: "20000000",
-  loan_term: "12",
-  cibil_score: "778",
-  residential_assets_value: "2400000",
-  commercial_assets_value: "17600000",
-  luxury_assets_value: "22700000",
-  bank_asset_value: "8000000",
+  income_annum: "1800000",
+  loan_amount: "2500000",
+  loan_term: "36",
+  crib_score: "720",
+  residential_assets_value: "8000000",
+  commercial_assets_value: "0",
+  luxury_assets_value: "1200000",
+  bank_asset_value: "900000",
 };
 
 const BAND_COPY = {
@@ -101,7 +101,11 @@ export default function NewAssessmentPage() {
         <h1>New Risk Assessment</h1>
         <p>
           Enter one applicant once. We run default risk, approval, and recommended
-          amount together and save the full report.
+          amount together and save the full report. Amounts are in LKR; score is CRIB (250–900).
+        </p>
+        <p className="data-disclosure">
+          Models trained on synthetic Sri Lankan data (calibrated to CRIB / DCS HIES anchors)
+          as of September 2026 — indicative only, not a substitute for a real credit decision.
         </p>
       </div>
 
@@ -127,7 +131,7 @@ export default function NewAssessmentPage() {
         <div className="form-grid">
           <NumberField label="Revolving utilization" name="revolving_utilization" min={0} max={2} slider value={values.revolving_utilization} onChange={handleChange} />
           <NumberField label="Debt-to-income ratio" name="debt_ratio" min={0} max={5} slider value={values.debt_ratio} onChange={handleChange} />
-          <NumberField label="Monthly income" name="monthly_income" min={0} value={values.monthly_income} onChange={handleChange} />
+          <NumberField label="Monthly income (LKR)" name="monthly_income" min={0} value={values.monthly_income} onChange={handleChange} />
           <NumberField label="Open credit lines" name="open_credit_lines" min={0} value={values.open_credit_lines} onChange={handleChange} />
           <NumberField label="Real-estate loans" name="real_estate_loans" min={0} value={values.real_estate_loans} onChange={handleChange} />
           <NumberField label="Times 30-59 days late" name="times_30_59_days_late" min={0} value={values.times_30_59_days_late} onChange={handleChange} />
@@ -159,14 +163,14 @@ export default function NewAssessmentPage() {
               { value: "Yes", label: "Yes" },
             ]}
           />
-          <NumberField label="Annual income" name="income_annum" min={1} value={values.income_annum} onChange={handleChange} />
-          <NumberField label="Requested loan amount" name="loan_amount" min={1} value={values.loan_amount} onChange={handleChange} />
+          <NumberField label="Annual income (LKR)" name="income_annum" min={1} value={values.income_annum} onChange={handleChange} />
+          <NumberField label="Requested loan amount (LKR)" name="loan_amount" min={1} value={values.loan_amount} onChange={handleChange} />
           <NumberField label="Loan term (months)" name="loan_term" min={1} value={values.loan_term} onChange={handleChange} />
-          <NumberField label="CIBIL score" name="cibil_score" min={300} max={900} value={values.cibil_score} onChange={handleChange} />
-          <NumberField label="Residential assets" name="residential_assets_value" min={0} value={values.residential_assets_value} onChange={handleChange} />
-          <NumberField label="Commercial assets" name="commercial_assets_value" min={0} value={values.commercial_assets_value} onChange={handleChange} />
-          <NumberField label="Luxury assets" name="luxury_assets_value" min={0} value={values.luxury_assets_value} onChange={handleChange} />
-          <NumberField label="Bank assets" name="bank_asset_value" min={0} value={values.bank_asset_value} onChange={handleChange} />
+          <NumberField label="CRIB score" name="crib_score" min={250} max={900} value={values.crib_score} onChange={handleChange} />
+          <NumberField label="Residential assets (LKR)" name="residential_assets_value" min={0} value={values.residential_assets_value} onChange={handleChange} />
+          <NumberField label="Commercial assets (LKR)" name="commercial_assets_value" min={0} value={values.commercial_assets_value} onChange={handleChange} />
+          <NumberField label="Luxury assets (LKR)" name="luxury_assets_value" min={0} value={values.luxury_assets_value} onChange={handleChange} />
+          <NumberField label="Bank assets (LKR)" name="bank_asset_value" min={0} value={values.bank_asset_value} onChange={handleChange} />
         </div>
 
         <div className="form-grid form-actions">

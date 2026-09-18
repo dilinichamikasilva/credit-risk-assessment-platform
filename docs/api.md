@@ -1,12 +1,15 @@
 # Credit Risk Assessment API
 
+Sri Lanka localization: amounts in **LKR**, score field **`crib_score`** (CRIB **250–900**).
+Models are trained on **synthetic** SL-calibrated data — indicative only.
+
 Base URL (local dev): http://127.0.0.1:8000 — interactive docs at `/docs`
 (full request/response schemas for every endpoint).
 Run: `uvicorn app.main:app --reload`  |  Tests: `python -m pytest tests/ -q`
 
 ## Persistence model
 
-- `applications` — one loan application (columns mirror `loan_approval_dataset.csv`).
+- `applications` — one loan application (columns mirror `loan_approval_lk_synthetic.csv`).
   Predict routers create **thin** records (applicant name only) via
   `get_or_create_application()` and reuse them by name, so one applicant = one row.
 - `assessments` — one row per model run; `inputs`/`outputs` are JSON so the same
@@ -45,12 +48,12 @@ Request:
 
 ```json
 {
-  "revolving_utilization": 0.3,
-  "age": 45,
+  "revolving_utilization": 0.25,
+  "age": 42,
   "times_30_59_days_late": 0,
-  "debt_ratio": 0.35,
-  "monthly_income": 5000,
-  "open_credit_lines": 6,
+  "debt_ratio": 0.28,
+  "monthly_income": 150000,
+  "open_credit_lines": 5,
   "times_90_days_late": 0,
   "real_estate_loans": 1,
   "times_60_89_days_late": 0,
@@ -64,7 +67,7 @@ Response (200):
 {
   "probability": 0.084,
   "risk_band": "low",
-  "model_version": "model_a_v1"
+  "model_version": "model_a_v2_lk"
 }
 ```
 
@@ -77,14 +80,14 @@ Missing/invalid fields → 422; model artifacts not trained/committed → 503.
   "no_of_dependents": 2,
   "education": "Graduate",
   "self_employed": "No",
-  "income_annum": 9600000,
-  "loan_term": 12,
-  "cibil_score": 778,
-  "residential_assets_value": 2400000,
-  "commercial_assets_value": 17600000,
-  "luxury_assets_value": 22700000,
-  "bank_asset_value": 8000000,
-  "requested_amount": 20000000,
+  "income_annum": 2400000,
+  "loan_term": 36,
+  "crib_score": 720,
+  "residential_assets_value": 9000000,
+  "commercial_assets_value": 0,
+  "luxury_assets_value": 1500000,
+  "bank_asset_value": 1200000,
+  "requested_amount": 3500000,
   "applicant_name": "Demo Applicant"
 }
 ```
@@ -93,10 +96,10 @@ Response (200):
 
 ```json
 {
-  "recommended_amount": 20000000,
-  "predicted_amount": 29266544,
-  "capped_at_requested": true,
-  "model_version": "model_c_v1",
+  "recommended_amount": 3000000,
+  "predicted_amount": 3003320,
+  "capped_at_requested": false,
+  "model_version": "model_c_v2_lk",
   "application_id": 1
 }
 ```
@@ -113,13 +116,13 @@ reuses) one application and logs three assessment rows. Response shape:
 ```json
 {
   "application_id": 1,
-  "default": { "probability": 0.08, "risk_band": "low", "model_version": "model_a_v1" },
-  "approval": { "approved": true, "approval_probability": 0.99, "model_version": "model_b_v1" },
+  "default": { "probability": 0.08, "risk_band": "low", "model_version": "model_a_v2_lk" },
+  "approval": { "approved": true, "approval_probability": 0.97, "model_version": "model_b_v2_lk" },
   "amount": {
     "recommended_amount": 20000000,
     "predicted_amount": 29266544,
     "capped_at_requested": true,
-    "model_version": "model_c_v1",
+    "model_version": "model_c_v2_lk",
     "application_id": 1
   }
 }
@@ -138,7 +141,7 @@ outputs for every model run). Unknown id → `404`.
 
 - → `200` full `ApplicationDetail`; the name changes, **everything else stays**.
 - `{}` → `200`, nothing changes.
-- Editing assessment inputs (`cibil_score`, `loan_amount`, `status`, …) →
+- Editing assessment inputs (`crib_score`, `loan_amount`, `status`, …) →
   `422` — the audit trail is immutable once assessments exist.
 - Unknown id → `404`.
 

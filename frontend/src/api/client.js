@@ -1,6 +1,8 @@
 import axios from "axios";
 
-const baseURL = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000";
+// Empty baseURL = same origin → Vite proxy (see vite.config.js).
+// Set VITE_API_BASE_URL only when calling the API on another host.
+const baseURL = import.meta.env.VITE_API_BASE_URL ?? "";
 
 export const apiClient = axios.create({
   baseURL,
@@ -64,21 +66,44 @@ export function formatApiError(err) {
     return detail.map((d) => `${d.loc?.at(-1)}: ${d.msg}`).join(", ");
   }
   if (typeof detail === "string") return detail;
+  if (err.code === "ERR_NETWORK" || err.message === "Network Error") {
+    return (
+      "Cannot reach the API. Start the backend with " +
+      "`uvicorn app.main:app --reload` and confirm VITE_API_BASE_URL " +
+      `(currently ${baseURL}).`
+    );
+  }
+  if (err.response?.status) {
+    return err.message || `Request failed (${err.response.status})`;
+  }
   return err.message || "Request failed";
 }
 
 export function formatCurrency(value) {
   if (value == null || Number.isNaN(Number(value))) return "—";
-  return new Intl.NumberFormat("en-IN", {
-    style: "currency",
-    currency: "INR",
-    maximumFractionDigits: 0,
-  }).format(Number(value));
+  // Prefer en-LK; fall back if the runtime lacks that locale data.
+  try {
+    return new Intl.NumberFormat("en-LK", {
+      style: "currency",
+      currency: "LKR",
+      maximumFractionDigits: 0,
+    }).format(Number(value));
+  } catch {
+    return new Intl.NumberFormat("en", {
+      style: "currency",
+      currency: "LKR",
+      maximumFractionDigits: 0,
+    }).format(Number(value));
+  }
 }
 
 export function formatNumber(value) {
   if (value == null || Number.isNaN(Number(value))) return "—";
-  return new Intl.NumberFormat("en-IN").format(Number(value));
+  try {
+    return new Intl.NumberFormat("en-LK").format(Number(value));
+  } catch {
+    return new Intl.NumberFormat("en").format(Number(value));
+  }
 }
 
 export function humanizeLabel(value) {

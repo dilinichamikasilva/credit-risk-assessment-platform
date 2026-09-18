@@ -7,14 +7,14 @@ SAMPLE_PAYLOAD = {
     "no_of_dependents": 2,
     "education": "Graduate",
     "self_employed": "No",
-    "income_annum": 9_600_000,
-    "loan_term": 12,
-    "cibil_score": 778,
-    "residential_assets_value": 2_400_000,
-    "commercial_assets_value": 17_600_000,
-    "luxury_assets_value": 22_700_000,
-    "bank_asset_value": 8_000_000,
-    "requested_amount": 20_000_000,
+    "income_annum": 2_400_000,
+    "loan_term": 36,
+    "crib_score": 720,
+    "residential_assets_value": 9_000_000,
+    "commercial_assets_value": 0,
+    "luxury_assets_value": 1_500_000,
+    "bank_asset_value": 1_200_000,
+    "requested_amount": 3_500_000,
 }
 
 
@@ -43,9 +43,9 @@ def test_recommended_amount_never_exceeds_requested(api_env):
     assert body["capped_at_requested"] is True
 
 
-def test_recommended_amount_rejects_bad_cibil(api_env):
+def test_recommended_amount_rejects_bad_crib(api_env):
     client, _ = api_env
-    bad = {**SAMPLE_PAYLOAD, "cibil_score": 100}
+    bad = {**SAMPLE_PAYLOAD, "crib_score": 100}
     resp = client.post("/predict/recommended-amount", json=bad)
     assert resp.status_code == 422
 

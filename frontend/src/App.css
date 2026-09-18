@@ -359,6 +359,17 @@
   margin: 0 auto;
 }
 
+.page-header .data-disclosure {
+  margin-top: 0.75rem;
+  max-width: 640px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-text-muted);
+  border-left: 3px solid var(--color-border);
+  padding-left: 0.75rem;
+  text-align: left;
+}
+
 /* ---------- Form card ---------- */
 .form-card {
   background: var(--color-surface);

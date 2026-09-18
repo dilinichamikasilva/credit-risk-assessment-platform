@@ -31,7 +31,7 @@ def _loan_sample():
             "income_annum": [5_000_000, 3_000_000],
             "loan_amount": [10_000_000, 4_000_000],
             "loan_term": [12, 8],
-            "cibil_score": [780, 420],
+            "crib_score": [780, 420],
             "residential_assets_value": [-100000, 1_000_000],
             "commercial_assets_value": [500_000, 0],
             "luxury_assets_value": [2_000_000, 800_000],

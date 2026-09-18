@@ -5,12 +5,12 @@ from app.models_db import Application, Assessment
 
 FULL_PAYLOAD = {
     "applicant_name": "Flagship Demo",
-    "revolving_utilization": 0.3,
-    "age": 45,
+    "revolving_utilization": 0.25,
+    "age": 42,
     "times_30_59_days_late": 0,
-    "debt_ratio": 0.35,
-    "monthly_income": 5000,
-    "open_credit_lines": 6,
+    "debt_ratio": 0.28,
+    "monthly_income": 150_000,
+    "open_credit_lines": 5,
     "times_90_days_late": 0,
     "real_estate_loans": 1,
     "times_60_89_days_late": 0,
@@ -18,14 +18,14 @@ FULL_PAYLOAD = {
     "no_of_dependents": 2,
     "education": "Graduate",
     "self_employed": "No",
-    "income_annum": 9_600_000,
-    "loan_amount": 20_000_000,
-    "loan_term": 12,
-    "cibil_score": 778,
-    "residential_assets_value": 2_400_000,
-    "commercial_assets_value": 17_600_000,
-    "luxury_assets_value": 22_700_000,
-    "bank_asset_value": 8_000_000,
+    "income_annum": 1_800_000,
+    "loan_amount": 2_500_000,
+    "loan_term": 36,
+    "crib_score": 720,
+    "residential_assets_value": 8_000_000,
+    "commercial_assets_value": 0,
+    "luxury_assets_value": 1_200_000,
+    "bank_asset_value": 900_000,
 }
 
 
@@ -48,7 +48,7 @@ def test_full_assessment_runs_all_three_and_saves(api_env):
         assert app_row is not None
         assert app_row.applicant_name == "Flagship Demo"
         assert app_row.status == "assessed"
-        assert app_row.cibil_score == 778
+        assert app_row.crib_score == 720
         keys = {
             row.model_key
             for row in db.query(Assessment).filter(Assessment.application_id == app_row.id)

@@ -12,14 +12,14 @@ const INITIAL_VALUES = {
   no_of_dependents: "2",
   education: "Graduate",
   self_employed: "No",
-  income_annum: "9600000",
-  loan_term: "12",
-  cibil_score: "778",
-  residential_assets_value: "2400000",
-  commercial_assets_value: "17600000",
-  luxury_assets_value: "22700000",
-  bank_asset_value: "8000000",
-  requested_amount: "20000000",
+  income_annum: "2400000",
+  loan_term: "36",
+  crib_score: "720",
+  residential_assets_value: "9000000",
+  commercial_assets_value: "0",
+  luxury_assets_value: "1500000",
+  bank_asset_value: "1200000",
+  requested_amount: "3500000",
 };
 
 export default function RecommendedAmountPage() {
@@ -44,7 +44,7 @@ export default function RecommendedAmountPage() {
         self_employed: values.self_employed,
         income_annum: parseFloat(values.income_annum),
         loan_term: parseInt(values.loan_term, 10),
-        cibil_score: parseInt(values.cibil_score, 10),
+        crib_score: parseInt(values.crib_score, 10),
         residential_assets_value: parseFloat(values.residential_assets_value),
         commercial_assets_value: parseFloat(values.commercial_assets_value),
         luxury_assets_value: parseFloat(values.luxury_assets_value),
@@ -70,8 +70,12 @@ export default function RecommendedAmountPage() {
         <p className="eyebrow">Advanced tool</p>
         <h1>Recommended Loan Amount</h1>
         <p>
-          Get a safe loan amount based on the applicant's income, assets, and credit
-          score. We'll never recommend more than they asked for.
+          Get a safe loan amount (LKR) based on income, assets, and CRIB score.
+          We'll never recommend more than they asked for.
+        </p>
+        <p className="data-disclosure">
+          Models trained on synthetic Sri Lankan data (calibrated to CRIB / DCS HIES anchors)
+          as of September 2026 — indicative only, not a substitute for a real credit decision.
         </p>
       </div>
 
@@ -123,7 +127,7 @@ export default function RecommendedAmountPage() {
             ]}
           />
           <NumberField
-            label="Annual income"
+            label="Annual income (LKR)"
             name="income_annum"
             min={1}
             value={values.income_annum}
@@ -137,15 +141,15 @@ export default function RecommendedAmountPage() {
             onChange={handleChange}
           />
           <NumberField
-            label="CIBIL score"
-            name="cibil_score"
-            min={300}
+            label="CRIB score"
+            name="crib_score"
+            min={250}
             max={900}
-            value={values.cibil_score}
+            value={values.crib_score}
             onChange={handleChange}
           />
           <NumberField
-            label="Requested amount"
+            label="Requested amount (LKR)"
             name="requested_amount"
             min={1}
             value={values.requested_amount}

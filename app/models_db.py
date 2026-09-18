@@ -21,7 +21,7 @@ class Application(Base):
     income_annum: Mapped[float | None] = mapped_column(Float, nullable=True)
     loan_amount: Mapped[float | None] = mapped_column(Float, nullable=True)
     loan_term: Mapped[int | None] = mapped_column(Integer, nullable=True)
-    cibil_score: Mapped[int | None] = mapped_column(Integer, nullable=True)
+    crib_score: Mapped[int | None] = mapped_column(Integer, nullable=True)
     residential_assets_value: Mapped[float] = mapped_column(Float, default=0.0)
     commercial_assets_value: Mapped[float] = mapped_column(Float, default=0.0)
     luxury_assets_value: Mapped[float] = mapped_column(Float, default=0.0)

@@ -16,7 +16,7 @@ def _make_application(db) -> Application:
     row = Application(
         applicant_name="Ilma Test", no_of_dependents=2, education="Graduate",
         self_employed="No", income_annum=9_600_000, loan_amount=29_900_000,
-        loan_term=12, cibil_score=778, residential_assets_value=2_400_000,
+        loan_term=12, crib_score=720, residential_assets_value=2_400_000,
         commercial_assets_value=17_600_000, luxury_assets_value=22_700_000,
         bank_asset_value=8_000_000,
     )
@@ -43,7 +43,7 @@ def test_save_assessment_without_application():
     db = _db()
     saved = save_assessment(
         db, model_key="model_b", model_version="model_b_v1",
-        inputs={"cibil_score": 778}, outputs={"approval": "Approved"},
+        inputs={"crib_score": 720}, outputs={"approval": "Approved"},
     )
     assert saved.application_id is None
     assert saved.risk_band is None
@@ -66,7 +66,7 @@ def test_thin_application_create_for_predict_linking():
     db.add(row)
     db.commit()
     assert row.id is not None
-    assert row.cibil_score is None
+    assert row.crib_score is None
 
 def test_get_or_create_application_reuses_same_name():
     db = _db()
@@ -80,4 +80,4 @@ def test_get_or_create_application_creates_new_name():
     db = _db()
     row = get_or_create_application(db, applicant_name="New Person")
     assert row.id is not None
-    assert row.cibil_score is None            # thin record: loan fields empty
+    assert row.crib_score is None            # thin record: loan fields empty

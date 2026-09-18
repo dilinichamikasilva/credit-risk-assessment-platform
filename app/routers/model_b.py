@@ -7,6 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from app.model_loader import LoadedModel, ModelNotAvailableError, get_model
 from app.schemas.model_b import LoanApprovalRequest, LoanApprovalResponse
+from ml.pipeline.features import crib_risk_tier
 
 router = APIRouter(tags=["model-b"])
 
@@ -43,16 +44,8 @@ def predict_loan_approval(
     approval_probability = float(probabilities[1])
     approved = prediction == 1
 
-    # Keep the displayed tier aligned with the shared feature-engineering rule.
-    score = int(payload.cibil_score)
-    if score <= 579:
-        risk_tier = "Poor"
-    elif score <= 669:
-        risk_tier = "Fair"
-    elif score <= 739:
-        risk_tier = "Good"
-    else:
-        risk_tier = "Excellent"
+    # Project-defined tiers over official CRIB 250–900 (not official CRIB letter grades).
+    risk_tier = crib_risk_tier(payload.crib_score)
 
     return LoanApprovalResponse(
         approved=approved,

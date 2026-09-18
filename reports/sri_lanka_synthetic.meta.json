@@ -1,0 +1,58 @@
+{
+  "synthetic": true,
+  "never_real_applicant_records": true,
+  "provenance": "synthetic, calibrated to CRIB Score range 250-900 (crib.lk Score Reference Guide / FAQs) and DCS HIES 2019 household income anchors (mean monthly LKR 76,414) with mid-2020s nominal retail loan/asset bands \u2014 NOT real applicant records. See reports/phase0_sri_lanka_research.md.",
+  "generated_at": "2026-09-18T15:35:08.475778+00:00",
+  "files": {
+    "model_a": {
+      "path": "E:/ML/CREDIT-RISK-ASSESMENT-ML-Final/data/raw/credit_risk_lk_synthetic.csv",
+      "rows": 40000,
+      "cols": [
+        "Id",
+        "SeriousDlqin2yrs",
+        "RevolvingUtilizationOfUnsecuredLines",
+        "age",
+        "NumberOfTime30-59DaysPastDueNotWorse",
+        "DebtRatio",
+        "MonthlyIncome",
+        "NumberOfOpenCreditLinesAndLoans",
+        "NumberOfTimes90DaysLate",
+        "NumberRealEstateLoansOrLines",
+        "NumberOfTime60-89DaysPastDueNotWorse",
+        "NumberOfDependents"
+      ],
+      "default_rate": 0.29815,
+      "currency": "LKR",
+      "income_field": "MonthlyIncome"
+    },
+    "model_b_c": {
+      "path": "E:/ML/CREDIT-RISK-ASSESMENT-ML-Final/data/raw/loan_approval_lk_synthetic.csv",
+      "rows": 6000,
+      "cols": [
+        "loan_id",
+        "no_of_dependents",
+        "education",
+        "self_employed",
+        "income_annum",
+        "loan_amount",
+        "loan_term",
+        "crib_score",
+        "residential_assets_value",
+        "commercial_assets_value",
+        "luxury_assets_value",
+        "bank_asset_value",
+        "loan_status"
+      ],
+      "approved_rate": 0.7026666666666667,
+      "currency": "LKR",
+      "score_field": "crib_score",
+      "score_range": [
+        250,
+        900
+      ],
+      "score_range_source": "CRIB Score Reference Guide / crib.lk FAQs",
+      "approval_label_note": "loan_status is a noisy multi-factor function of CRIB, LTI, asset coverage, income, education, employment \u2014 NOT a hard CRIB cutoff"
+    }
+  },
+  "phase0": "reports/phase0_sri_lanka_research.md"
+}

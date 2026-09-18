@@ -10,7 +10,7 @@ def _seed(session_factory, **overrides) -> int:
     data = dict(
         applicant_name="Ilma Test", no_of_dependents=2, education="Graduate",
         self_employed="No", income_annum=9_600_000, loan_amount=29_900_000,
-        loan_term=12, cibil_score=778, residential_assets_value=2_400_000,
+        loan_term=12, crib_score=720, residential_assets_value=2_400_000,
         commercial_assets_value=17_600_000, luxury_assets_value=22_700_000,
         bank_asset_value=8_000_000,
     )
@@ -29,7 +29,7 @@ def test_put_updates_name_and_returns_detail(api_env):
     assert resp.status_code == 200
     body = resp.json()
     assert body["applicant_name"] == "Ilma T. (corrected)"
-    assert body["cibil_score"] == 778           # assessment inputs untouched
+    assert body["crib_score"] == 720           # assessment inputs untouched
     assert body["status"] == "submitted"        # system state untouched
 
 
@@ -41,7 +41,7 @@ def test_put_unknown_id_returns_404(api_env):
 
 def test_put_rejects_editing_assessment_inputs(api_env):
     client, _ = api_env
-    resp = client.put("/applications/1", json={"cibil_score": 700})
+    resp = client.put("/applications/1", json={"crib_score": 700})
     assert resp.status_code == 422              # extra="forbid" - inputs are immutable
 
 
@@ -56,7 +56,7 @@ def test_put_empty_body_changes_nothing(api_env):
     app_id = _seed(sessions)
     resp = client.put(f"/applications/{app_id}", json={})
     assert resp.status_code == 200
-    assert resp.json()["cibil_score"] == 778
+    assert resp.json()["crib_score"] == 720
 
 
 def test_delete_removes_application_and_cascades(api_env):

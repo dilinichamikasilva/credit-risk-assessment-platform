@@ -36,7 +36,7 @@ export default function HistoryPage() {
       [
         application.applicant_name,
         application.status,
-        application.cibil_score,
+        application.crib_score,
         application.id,
       ]
         .filter((value) => value != null)
@@ -53,7 +53,11 @@ export default function HistoryPage() {
         <h1>Assessment History</h1>
         <p>
           Review previously saved applicants and open an individual record
-          for the complete assessment timeline.
+          for the complete assessment timeline. Amounts are shown in LKR.
+        </p>
+        <p className="data-disclosure">
+          Models trained on synthetic Sri Lankan data (calibrated to CRIB / DCS HIES anchors)
+          as of September 2026 — indicative only, not a substitute for a real credit decision.
         </p>
       </div>
 
@@ -64,7 +68,7 @@ export default function HistoryPage() {
             id="history-search"
             type="search"
             value={search}
-            placeholder="Search by name, ID, CIBIL, or status"
+            placeholder="Search by name, ID, CRIB, or status"
             onChange={(event) => setSearch(event.target.value)}
           />
         </div>
@@ -105,7 +109,7 @@ export default function HistoryPage() {
                 <thead>
                   <tr>
                     <th>Applicant</th>
-                    <th>CIBIL</th>
+                    <th>CRIB</th>
                     <th>Loan amount</th>
                     <th>Status</th>
                     <th>Assessments</th>
@@ -120,7 +124,7 @@ export default function HistoryPage() {
                         <strong>{application.applicant_name}</strong>
                         <span className="table-subtext">#{application.id}</span>
                       </td>
-                      <td>{application.cibil_score ?? "—"}</td>
+                      <td>{application.crib_score ?? "—"}</td>
                       <td>{formatCurrency(application.loan_amount)}</td>
                       <td>
                         <span className={`badge ${application.status === "assessed" ? "low" : "medium"}`}>

@@ -16,7 +16,7 @@ const INITIAL_VALUES = {
   income_annum: "",
   loan_amount: "",
   loan_term: "",
-  cibil_score: "",
+  crib_score: "",
   residential_assets_value: "",
   commercial_assets_value: "",
   luxury_assets_value: "",
@@ -26,7 +26,7 @@ const INITIAL_VALUES = {
 const INT_FIELDS = new Set([
   "no_of_dependents",
   "loan_term",
-  "cibil_score",
+  "crib_score",
 ]);
 
 const TIER_COPY = {
@@ -88,8 +88,12 @@ export default function LoanApprovalPage() {
         <p className="eyebrow">Advanced tool</p>
         <h1>Loan Approval Prediction</h1>
         <p>
-          Enter the applicant's loan profile to check whether their loan
-          would likely be approved, and see their credit risk tier.
+          Enter the applicant's loan profile (LKR amounts, CRIB score 250–900) to check
+          whether their loan would likely be approved, and see their credit risk tier.
+        </p>
+        <p className="data-disclosure">
+          Models trained on synthetic Sri Lankan data (calibrated to CRIB / DCS HIES anchors)
+          as of September 2026 — indicative only, not a substitute for a real credit decision.
         </p>
       </div>
 
@@ -140,14 +144,14 @@ export default function LoanApprovalPage() {
             ]}
           />
           <NumberField
-            label="Annual income"
+            label="Annual income (LKR)"
             name="income_annum"
             min={1}
             value={values.income_annum}
             onChange={handleChange}
           />
           <NumberField
-            label="Requested loan amount"
+            label="Requested loan amount (LKR)"
             name="loan_amount"
             min={1}
             value={values.loan_amount}
@@ -161,11 +165,11 @@ export default function LoanApprovalPage() {
             onChange={handleChange}
           />
           <NumberField
-            label="CIBIL score"
-            name="cibil_score"
-            min={300}
+            label="CRIB score"
+            name="crib_score"
+            min={250}
             max={900}
-            value={values.cibil_score}
+            value={values.crib_score}
             onChange={handleChange}
           />
         </div>

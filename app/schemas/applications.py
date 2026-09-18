@@ -5,16 +5,19 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from ml.pipeline.features import CRIB_SCORE_MAX, CRIB_SCORE_MIN
+
 
 class ApplicationCreate(BaseModel):
     applicant_name: str = Field(min_length=1, max_length=120)
     no_of_dependents: int = Field(ge=0, le=20)
     education: Literal["Graduate", "Not Graduate"]
     self_employed: Literal["Yes", "No"]
-    income_annum: float = Field(ge=0)
-    loan_amount: float = Field(gt=0)
-    loan_term: int = Field(gt=0)                                  # years
-    cibil_score: int = Field(ge=300, le=900)
+    income_annum: float = Field(ge=0, description="Annual income in LKR")
+    loan_amount: float = Field(gt=0, description="Requested loan amount in LKR")
+    loan_term: int = Field(gt=0)                                  # months in training data
+    # Official CRIB Score range 250–900 (CRIB Score Reference Guide / crib.lk FAQs)
+    crib_score: int = Field(ge=CRIB_SCORE_MIN, le=CRIB_SCORE_MAX)
     residential_assets_value: float = Field(ge=0, default=0.0)
     commercial_assets_value: float = Field(ge=0, default=0.0)
     luxury_assets_value: float = Field(ge=0, default=0.0)
@@ -30,7 +33,7 @@ class ApplicationCreate(BaseModel):
 #    income_annum: float | None = Field(default=None, ge=0)
 #    loan_amount: float | None = Field(default=None, gt=0)
 #    loan_term: int | None = Field(default=None, gt=0)
-#    cibil_score: int | None = Field(default=None, ge=300, le=900)
+#    crib_score: int | None = Field(default=None, ge=CRIB_SCORE_MIN, le=CRIB_SCORE_MAX)
 #    residential_assets_value: float | None = Field(default=None, ge=0)
 #    commercial_assets_value: float | None = Field(default=None, ge=0)
 #    luxury_assets_value: float | None = Field(default=None, ge=0)
@@ -43,7 +46,7 @@ class ApplicationUpdate(BaseModel):
     Assessment results and the loan inputs that produced them are immutable
     once assessments are logged — editing them would corrupt the audit trail.
     """
-    model_config = ConfigDict(extra="forbid")  # sending cibil_score etc. -> 422
+    model_config = ConfigDict(extra="forbid")  # sending crib_score etc. -> 422
 
     applicant_name: str | None = Field(default=None, min_length=1, max_length=120)
 
@@ -66,7 +69,7 @@ class ApplicationSummary(BaseModel):
 
     id: int
     applicant_name: str
-    cibil_score: int | None
+    crib_score: int | None
     loan_amount: float | None
     status: str
     created_at: datetime
@@ -83,7 +86,7 @@ class ApplicationDetail(BaseModel):
     income_annum: float | None
     loan_amount: float | None
     loan_term: int | None
-    cibil_score: int | None
+    crib_score: int | None
     residential_assets_value: float
     commercial_assets_value: float
     luxury_assets_value: float

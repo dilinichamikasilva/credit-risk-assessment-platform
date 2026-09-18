@@ -13,7 +13,8 @@ class DefaultRiskRequest(BaseModel):
     age: int = Field(ge=0, le=120)
     times_30_59_days_late: int = Field(ge=0, alias="times_30_59_days_late")
     debt_ratio: float = Field(ge=0)
-    monthly_income: float = Field(ge=0)
+    # Monthly income in LKR (mid-2020s retail; see Phase 0 / synthetic dataset notes)
+    monthly_income: float = Field(ge=0, description="Monthly income in LKR")
     open_credit_lines: int = Field(ge=0)
     times_90_days_late: int = Field(ge=0)
     real_estate_loans: int = Field(ge=0)
@@ -24,12 +25,12 @@ class DefaultRiskRequest(BaseModel):
         "populate_by_name": True,
         "json_schema_extra": {
             "example": {
-                "revolving_utilization": 0.3,
-                "age": 45,
+                "revolving_utilization": 0.25,
+                "age": 42,
                 "times_30_59_days_late": 0,
-                "debt_ratio": 0.35,
-                "monthly_income": 5000,
-                "open_credit_lines": 6,
+                "debt_ratio": 0.28,
+                "monthly_income": 150_000,
+                "open_credit_lines": 5,
                 "times_90_days_late": 0,
                 "real_estate_loans": 1,
                 "times_60_89_days_late": 0,
