@@ -272,7 +272,7 @@ export default function ApplicationDetailPage() {
           <div><span className="muted">Self-employed</span><strong>{application.self_employed || "—"}</strong></div>
           <div><span className="muted">Income / annum</span><strong>{formatCurrency(application.income_annum)}</strong></div>
           <div><span className="muted">Loan amount</span><strong>{formatCurrency(application.loan_amount)}</strong></div>
-          <div><span className="muted">Loan term</span><strong>{application.loan_term ? `${application.loan_term} yr` : "—"}</strong></div>
+          <div><span className="muted">Loan term (months)</span><strong>{application.loan_term ?? "—"}</strong></div>
           <div><span className="muted">CIBIL score</span><strong>{application.cibil_score ?? "—"}</strong></div>
           <div><span className="muted">Dependents</span><strong>{application.no_of_dependents}</strong></div>
           <div><span className="muted">Last updated</span><strong>{formatDate(application.updated_at)}</strong></div>
@@ -301,11 +301,11 @@ export default function ApplicationDetailPage() {
                 setEditing(true);
               }}
             >
-              ✏️ Rename applicant
+              Rename applicant
             </button>
           )}
           <button type="button" className="submit-btn danger-btn" onClick={handleDelete} disabled={busy}>
-            🗑 Delete application
+            Delete application
           </button>
         </div>
         <p className="result-meta">
