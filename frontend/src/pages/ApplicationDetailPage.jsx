@@ -10,9 +10,9 @@ import {
 import Gauge from "../components/Gauge";
 
 const MODEL_LABELS = {
-  model_a: "Default risk (A)",
-  model_b: "Approval (B)",
-  model_c: "Amount (C)",
+  model_a: "Default risk",
+  model_b: "Loan approval",
+  model_c: "Recommended amount",
 };
 
 const BAND_COPY = {
@@ -38,7 +38,7 @@ function OutputRows({ item }) {
   if (item.model_key === "model_a") {
     return (
       <div className="result-row">
-        Probability: <strong>{(Number(out.probability) * 100).toFixed(1)}%</strong>
+        Chance of defaulting: <strong>{(Number(out.probability) * 100).toFixed(1)}%</strong>
       </div>
     );
   }
@@ -80,11 +80,9 @@ function AssessmentRow({ item }) {
           )}
         </h3>
         <OutputRows item={item} />
-        <p className="result-meta">
-          {item.model_version} · {formatDate(item.created_at)}
-        </p>
+        <p className="result-meta">{formatDate(item.created_at)}</p>
         <details>
-          <summary className="muted">Inputs / outputs (audit log)</summary>
+          <summary className="muted">Show technical details</summary>
           <pre className="json-block">{JSON.stringify(item.inputs, null, 2)}</pre>
           <pre className="json-block">{JSON.stringify(item.outputs, null, 2)}</pre>
         </details>
@@ -309,8 +307,8 @@ export default function ApplicationDetailPage() {
           </button>
         </div>
         <p className="result-meta">
-          Only the name can be corrected — assessment results are an immutable audit log
-          (the API rejects everything else with 422).
+          Only the name can be changed here — assessment results are kept as a
+          permanent record and can't be edited.
         </p>
       </div>
 
@@ -327,7 +325,9 @@ export default function ApplicationDetailPage() {
                     {BAND_COPY[a.risk_band]?.icon} {BAND_COPY[a.risk_band]?.label}
                   </span>
                 </div>
-                <p className="result-meta">{a.model_version}</p>
+                <div className="result-row">
+                  Chance of defaulting: <strong>{(Number(a.outputs.probability) * 100).toFixed(1)}%</strong>
+                </div>
               </div>
             </>
           )}
@@ -343,7 +343,6 @@ export default function ApplicationDetailPage() {
                 <div className="result-row">
                   Confidence: <strong>{(Number(b.outputs.approval_probability) * 100).toFixed(1)}%</strong>
                 </div>
-                <p className="result-meta">{b.model_version}</p>
               </div>
             </>
           )}
@@ -354,11 +353,12 @@ export default function ApplicationDetailPage() {
               <div className="amount-hero compact">
                 <span className="amount-label">Recommended</span>
                 <span className="amount-value">{formatCurrency(c.outputs.recommended_amount)}</span>
-                {c.outputs.capped_at_requested && <span className="badge medium">Capped</span>}
+                {c.outputs.capped_at_requested && (
+                  <span className="badge medium">Capped at what was requested</span>
+                )}
               </div>
               <div className="result-details">
                 <h3>Recommended amount</h3>
-                <p className="result-meta">{c.model_version}</p>
               </div>
             </>
           )}

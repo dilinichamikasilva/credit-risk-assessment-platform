@@ -97,7 +97,7 @@ export default function NewAssessmentPage() {
   return (
     <div>
       <div className="page-header">
-        <p className="eyebrow">Flagship flow</p>
+        <p className="eyebrow">All-in-one</p>
         <h1>New Risk Assessment</h1>
         <p>
           Enter one applicant once. We run default risk, approval, and recommended
@@ -123,7 +123,7 @@ export default function NewAssessmentPage() {
           </div>
         </div>
 
-        <div className="form-section-title">Default-risk profile (Model A)</div>
+        <div className="form-section-title">💳 Credit & payment history</div>
         <div className="form-grid">
           <NumberField label="Revolving utilization" name="revolving_utilization" min={0} max={2} slider value={values.revolving_utilization} onChange={handleChange} />
           <NumberField label="Debt-to-income ratio" name="debt_ratio" min={0} max={5} slider value={values.debt_ratio} onChange={handleChange} />
@@ -137,7 +137,7 @@ export default function NewAssessmentPage() {
           <NumberField label="Dependents" name="dependents" min={0} value={values.dependents} onChange={handleChange} />
         </div>
 
-        <div className="form-section-title">Loan application (Models B &amp; C)</div>
+        <div className="form-section-title">📝 Loan details</div>
         <div className="form-grid">
           <SelectField
             label="Education"
@@ -211,9 +211,8 @@ export default function NewAssessmentPage() {
                   </span>
                 </div>
                 <div className="result-row">
-                  Probability: <strong>{(result.default.probability * 100).toFixed(1)}%</strong>
+                  Chance of defaulting: <strong>{(result.default.probability * 100).toFixed(1)}%</strong>
                 </div>
-                <p className="result-meta">{result.default.model_version}</p>
               </div>
             </div>
 
@@ -232,7 +231,6 @@ export default function NewAssessmentPage() {
                   Confidence:{" "}
                   <strong>{(result.approval.approval_probability * 100).toFixed(1)}%</strong>
                 </div>
-                <p className="result-meta">{result.approval.model_version}</p>
               </div>
             </div>
 
@@ -241,15 +239,14 @@ export default function NewAssessmentPage() {
                 <span className="amount-label">Recommended</span>
                 <span className="amount-value">{formatCurrency(result.amount.recommended_amount)}</span>
                 {result.amount.capped_at_requested && (
-                  <span className="badge medium">Capped</span>
+                  <span className="badge medium">Capped at what you requested</span>
                 )}
               </div>
               <div className="result-details">
                 <h3>Recommended amount</h3>
                 <div className="result-row">
-                  Predicted: <strong>{formatCurrency(result.amount.predicted_amount)}</strong>
+                  Model's estimate: <strong>{formatCurrency(result.amount.predicted_amount)}</strong>
                 </div>
-                <p className="result-meta">{result.amount.model_version}</p>
               </div>
             </div>
           </div>

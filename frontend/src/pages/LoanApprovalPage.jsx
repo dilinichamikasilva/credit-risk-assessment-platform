@@ -85,11 +85,11 @@ export default function LoanApprovalPage() {
   return (
     <div>
       <div className="page-header">
-        <p className="eyebrow">Advanced tool · Model B</p>
+        <p className="eyebrow">Advanced tool</p>
         <h1>Loan Approval Prediction</h1>
         <p>
-          Enter the applicant's loan profile to predict an approval decision
-          and view the model confidence and CIBIL-based risk tier.
+          Enter the applicant's loan profile to check whether their loan
+          would likely be approved, and see their credit risk tier.
         </p>
       </div>
 
@@ -214,7 +214,7 @@ export default function LoanApprovalPage() {
         <div className="result-wrap">
           <div className="result-card error">
             <div className="result-details">
-              <h3>Model B could not score this application</h3>
+              <h3>Could not score this application</h3>
               <p style={{ color: "#991b1b", margin: 0 }}>{error}</p>
             </div>
           </div>
@@ -239,11 +239,10 @@ export default function LoanApprovalPage() {
                 <strong>{(result.approval_probability * 100).toFixed(1)}%</strong>
               </div>
               <div className="result-row">
-                Risk tier: <strong>{result.risk_tier}</strong>
+                Credit risk tier: <strong>{result.risk_tier}</strong>
               </div>
               <p className="result-meta">
-                {TIER_COPY[result.risk_tier] || "Model B risk tier"} · Model version:{" "}
-                {result.model_version}
+                {TIER_COPY[result.risk_tier] || "Based on their credit score"}
               </p>
             </div>
           </div>

@@ -4,9 +4,9 @@ import BarList from "../components/charts/BarList";
 import DonutChart from "../components/charts/DonutChart";
 
 const MODEL_LABELS = {
-  model_a: "Default risk (A)",
-  model_b: "Approval (B)",
-  model_c: "Amount (C)",
+  model_a: "Default risk",
+  model_b: "Loan approval",
+  model_c: "Recommended amount",
 };
 
 function toItems(map, labelFn = (k) => k) {
@@ -44,7 +44,7 @@ export default function DashboardPage() {
       <div className="page-header">
         <p className="eyebrow">Insights</p>
         <h1>Analytics Dashboard</h1>
-        <p>Assessment volume, risk mix, and model usage at a glance.</p>
+        <p>How many applications you've assessed, and how the risk breaks down.</p>
       </div>
 
       {loading && (
@@ -99,7 +99,7 @@ export default function DashboardPage() {
               />
             </div>
             <div className="form-card">
-              <h3 className="card-title">Assessments by model</h3>
+              <h3 className="card-title">Assessments by type</h3>
               <BarList
                 items={toItems(summary.assessments_by_model, (k) => MODEL_LABELS[k] || k)}
               />

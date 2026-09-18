@@ -160,9 +160,8 @@ export default function DefaultRiskPage() {
                 </span>
               </div>
               <div className="result-row">
-                Default probability: <strong>{(result.probability * 100).toFixed(1)}%</strong>
+                Chance of defaulting: <strong>{(result.probability * 100).toFixed(1)}%</strong>
               </div>
-              <p className="result-meta">Model version: {result.model_version}</p>
             </div>
           </div>
         </div>

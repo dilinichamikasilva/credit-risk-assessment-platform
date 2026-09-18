@@ -67,11 +67,11 @@ export default function RecommendedAmountPage() {
   return (
     <div>
       <div className="page-header">
-        <p className="eyebrow">Advanced tool · Model C</p>
+        <p className="eyebrow">Advanced tool</p>
         <h1>Recommended Loan Amount</h1>
         <p>
-          Suggest a safe loan amount from income, assets, and CIBIL. The API never
-          recommends more than the applicant requested.
+          Get a safe loan amount based on the applicant's income, assets, and credit
+          score. We'll never recommend more than they asked for.
         </p>
       </div>
 
@@ -217,17 +217,14 @@ export default function RecommendedAmountPage() {
             <div className="result-details">
               <h3>Amount breakdown</h3>
               <div className="result-row">
-                Model prediction: <strong>{formatCurrency(result.predicted_amount)}</strong>
+                Model's estimate: <strong>{formatCurrency(result.predicted_amount)}</strong>
               </div>
               <div className="result-row">
                 Recommended: <strong>{formatCurrency(result.recommended_amount)}</strong>
               </div>
-              <p className="result-meta">
-                Model version: {result.model_version}
-                {result.application_id != null && (
-                  <> · Saved as application #{result.application_id}</>
-                )}
-              </p>
+              {result.application_id != null && (
+                <p className="result-meta">Saved as application #{result.application_id}</p>
+              )}
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ const PRIMARY = [
   {
     icon: "🧾",
     title: "New Assessment",
-    desc: "One form → default risk, approval, and recommended amount in a single saved report.",
+    desc: "Fill in one form to get default risk, loan approval, and a recommended amount — saved as one report.",
     to: "/assessment",
     ready: true,
     cta: "Start assessment →",
@@ -12,7 +12,7 @@ const PRIMARY = [
   {
     icon: "📊",
     title: "Dashboard",
-    desc: "Volume, risk mix, and model usage across every assessment run.",
+    desc: "See how many applications you've assessed and how the risk breaks down.",
     to: "/dashboard",
     ready: true,
     cta: "Open dashboard →",
@@ -23,15 +23,16 @@ const ADVANCED = [
   {
     icon: "📉",
     title: "Default Risk",
-    desc: "Estimate an applicant's probability of serious default within 2 years.",
+    desc: "Check the chance an applicant fails to repay within the next 2 years.",
     to: "/default-risk",
     ready: true,
   },
   {
     icon: "✅",
     title: "Loan Approval",
-    desc: "Predict whether a loan application would be approved or rejected.",
-    ready: false,
+    desc: "Check whether a loan application would likely be approved or rejected.",
+    to: "/loan-approval",
+    ready: true,
   },
   {
     icon: "💰",
@@ -50,8 +51,8 @@ export default function Home() {
           See the full risk picture, <span className="accent">in one view</span>
         </h1>
         <p>
-          Enter an applicant once and get default risk, approval, and a recommended
-          loan amount together — backed by three trained models and a shared feature pipeline.
+          Enter an applicant's details once and instantly see their default risk,
+          whether their loan would be approved, and how much they could safely borrow.
         </p>
         <div className="hero-actions">
           <Link to="/assessment" className="hero-cta">
