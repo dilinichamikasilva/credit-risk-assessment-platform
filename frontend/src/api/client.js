@@ -63,3 +63,14 @@ export function formatCurrency(value) {
     maximumFractionDigits: 0,
   }).format(Number(value));
 }
+
+// Ilma
+export async function updateApplication(id, patch) {
+  const { data } = await apiClient.put(`/applications/${id}`, patch);
+  return data;
+}
+
+// Ilma
+export async function deleteApplication(id) {
+  await apiClient.delete(`/applications/${id}`);
+}

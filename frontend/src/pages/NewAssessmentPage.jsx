@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import {
   formatApiError,
   formatCurrency,
@@ -193,7 +194,8 @@ export default function NewAssessmentPage() {
             <div>
               <h2>Combined risk report</h2>
               <p>
-                Saved as application #{result.application_id}
+                Saved as{" "}
+                <Link to={`/applications/${result.application_id}`}>application #{result.application_id}</Link>
               </p>
             </div>
           </div>
