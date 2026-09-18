@@ -85,6 +85,7 @@ export default function NewAssessmentPage() {
       );
       const data = await predictFullAssessment(payload);
       setResult(data);
+      setValues(INITIAL_VALUES);
     } catch (err) {
       setError(formatApiError(err));
     } finally {
