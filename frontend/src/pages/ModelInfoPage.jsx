@@ -75,7 +75,7 @@ export default function ModelInfoPage() {
           <div className="result-card error">
             <div className="result-details">
               <h3>Could not load model info</h3>
-              <p style={{ color: "#991b1b", margin: 0 }}>{error}</p>
+              <p className="error-text">{error}</p>
               <p className="result-meta">Needs the backend running (GET /model-info).</p>
             </div>
           </div>

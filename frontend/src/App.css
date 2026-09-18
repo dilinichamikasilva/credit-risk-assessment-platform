@@ -1,94 +1,215 @@
 #root {
-  max-width: 1000px;
+  max-width: 1160px;
   margin: 0 auto;
   padding: 0 1.5rem 4rem;
 }
 
-/* ---------- Navbar ---------- */
-.navbar {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  padding: 1.1rem 0;
+/* ---------- Shared utilities ---------- */
+.error-text {
+  color: var(--color-danger-text);
+  margin: 0;
+}
+
+.form-grid.form-actions {
+  margin-top: 1.6rem;
+}
+
+/* ---------- Header / Navigation ---------- */
+/*
+  Two-tier hierarchy: tier 1 is global wayfinding (white bar, underline
+  tabs, a CTA button for the primary action). Tier 2 is a contextual
+  segmented control for the four standalone "Advanced" tools — a visually
+  distinct, secondary-weight surface so it never competes with tier 1.
+*/
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--color-surface);
   margin-bottom: 2.5rem;
 }
 
-.nav-group {
+.navbar {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 0.35rem;
-}
-
-.nav-group.advanced {
-  gap: 0.25rem;
-}
-
-.nav-group-label {
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--color-text-muted);
-  margin-right: 0.25rem;
-}
-
-.nav-divider {
-  width: 1px;
-  height: 1.4rem;
-  background: var(--color-border);
-  margin: 0 0.4rem;
+  gap: 0.6rem 1.5rem;
+  padding: 0.85rem 0;
 }
 
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.55rem;
   font-family: var(--font-heading);
   font-weight: 700;
-  font-size: 1.1rem;
-  margin-right: 1.5rem;
+  font-size: 1.05rem;
   color: var(--color-text);
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .brand-mark {
   display: inline-flex;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
   background: linear-gradient(135deg, var(--color-primary), #a855f7);
   align-items: center;
   justify-content: center;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  flex-shrink: 0;
 }
 
-.nav-link {
-  padding: 0.55rem 1.05rem;
-  border-radius: 999px;
+.brand-text {
+  white-space: nowrap;
+}
+
+/* Tier 1 — primary nav: understated underline tabs, not pills */
+.primary-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+}
+
+.nav-tab {
+  position: relative;
+  padding: 0.6rem 0.05rem;
   text-decoration: none;
   color: var(--color-text-muted);
   font-weight: 600;
-  font-size: 0.92rem;
-  transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+  font-size: 0.9rem;
+  line-height: 1;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.nav-link:hover {
-  background: var(--color-primary-soft);
+.nav-tab:hover {
   color: var(--color-primary-dark);
 }
 
-.nav-link.active {
-  background: var(--color-primary);
+.nav-tab.active {
+  color: var(--color-primary-dark);
+  border-bottom-color: var(--color-primary);
+}
+
+/* The one primary action gets a filled button, not another tab */
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
   color: white;
+  font-weight: 700;
+  font-size: 0.86rem;
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nav-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.nav-cta.active {
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6);
+}
+
+/* Tier 2 — contextual assessment navigation */
+.subnav {
+  background: var(--color-primary-soft);
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.subnav-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.55rem 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.subnav-inner::-webkit-scrollbar {
+  display: none;
+}
+
+.subnav-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-primary-dark);
+  white-space: nowrap;
+  flex-shrink: 0;
+  /* Label, not a control — no pointer affordance */
+  cursor: default;
+  user-select: none;
+}
+
+.nav-segments {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0.2rem;
+  flex-shrink: 0;
+}
+
+.nav-segment {
+  padding: 0.4rem 0.85rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  font-weight: 600;
+  font-size: 0.81rem;
+  white-space: nowrap;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.nav-segment:hover {
+  color: var(--color-primary-dark);
+}
+
+.nav-segment.active {
+  background: var(--color-surface);
+  color: var(--color-primary-dark);
   box-shadow: var(--shadow-sm);
 }
 
-.nav-link.disabled {
-  opacity: 0.45;
-  cursor: default;
-  pointer-events: none;
+.nav-tab:focus-visible,
+.nav-cta:focus-visible,
+.nav-segment:focus-visible,
+.brand:focus-visible {
+  outline: 2px solid var(--color-primary-dark);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (max-width: 900px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .primary-nav {
+    width: 100%;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .brand-text {
+    display: none;
+  }
 }
 
 /* ---------- Hero / Home ---------- */
@@ -407,8 +528,33 @@
   padding: 1.2rem 1.3rem;
   box-shadow: var(--shadow-sm);
   display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-sm);
+  background: var(--color-primary-soft);
+  font-size: 1.35rem;
+}
+
+.stat-body {
+  display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.3rem;
+  min-width: 0;
 }
 
 .stat-label {
@@ -421,17 +567,54 @@
   font-family: var(--font-heading);
   font-size: 1.8rem;
   font-weight: 700;
+  line-height: 1.1;
 }
 
 .dash-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.1rem;
+  align-items: stretch;
+}
+
+.dash-grid .form-card {
+  display: flex;
+  flex-direction: column;
 }
 
 .card-title {
   font-size: 1.05rem;
   margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.empty-state-icon {
+  font-size: 2.6rem;
+  margin-bottom: 0.3rem;
+}
+
+.empty-state h3 {
+  font-size: 1.2rem;
+}
+
+.empty-state p {
+  color: var(--color-text-muted);
+  max-width: 380px;
+}
+
+.empty-state .hero-cta {
+  margin-top: 0.9rem;
 }
 
 .center-pad {
@@ -818,3 +1001,4 @@
     width: 100%;
   }
 }
+

@@ -76,6 +76,17 @@ export function formatCurrency(value) {
   }).format(Number(value));
 }
 
+export function formatNumber(value) {
+  if (value == null || Number.isNaN(Number(value))) return "—";
+  return new Intl.NumberFormat("en-IN").format(Number(value));
+}
+
+export function humanizeLabel(value) {
+  return String(value ?? "")
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 // Ilma
 export async function updateApplication(id, patch) {
   const { data } = await apiClient.put(`/applications/${id}`, patch);
