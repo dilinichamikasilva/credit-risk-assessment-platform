@@ -129,7 +129,7 @@ export default function DefaultRiskPage() {
           </div>
         ))}
 
-        <div className="form-grid" style={{ marginTop: "1.6rem" }}>
+        <div className="form-grid form-actions">
           <button type="submit" className="submit-btn" disabled={loading}>
             {loading && <span className="spinner" />}
             {loading ? "Scoring applicant..." : "Get risk assessment"}
@@ -142,7 +142,7 @@ export default function DefaultRiskPage() {
           <div className="result-card error">
             <div className="result-details">
               <h3>Something needs fixing</h3>
-              <p style={{ color: "#991b1b", margin: 0 }}>{error}</p>
+              <p className="error-text">{error}</p>
             </div>
           </div>
         </div>

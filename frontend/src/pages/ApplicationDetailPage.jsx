@@ -197,7 +197,7 @@ export default function ApplicationDetailPage() {
           <div className="result-card error">
             <div className="result-details">
               <h3>Application #{id} not found</h3>
-              <p style={{ color: "#991b1b", margin: 0 }}>
+              <p className="error-text">
                 It may have been deleted, or the link is stale.
               </p>
               <p className="result-meta">
@@ -221,7 +221,7 @@ export default function ApplicationDetailPage() {
           <div className="result-card error">
             <div className="result-details">
               <h3>Could not load application</h3>
-              <p style={{ color: "#991b1b", margin: 0 }}>{error}</p>
+              <p className="error-text">{error}</p>
             </div>
           </div>
         </div>
@@ -257,7 +257,7 @@ export default function ApplicationDetailPage() {
           <div className="result-card error">
             <div className="result-details">
               <h3>Action failed</h3>
-              <p style={{ color: "#991b1b", margin: 0 }}>{actionError}</p>
+              <p className="error-text">{actionError}</p>
             </div>
           </div>
         </div>

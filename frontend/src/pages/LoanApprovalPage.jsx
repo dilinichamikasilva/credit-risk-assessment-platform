@@ -202,7 +202,7 @@ export default function LoanApprovalPage() {
           />
         </div>
 
-        <div className="form-grid" style={{ marginTop: "1.6rem" }}>
+        <div className="form-grid form-actions">
           <button type="submit" className="submit-btn" disabled={loading}>
             {loading && <span className="spinner" />}
             {loading ? "Predicting approval..." : "Predict loan approval"}
@@ -215,7 +215,7 @@ export default function LoanApprovalPage() {
           <div className="result-card error">
             <div className="result-details">
               <h3>Could not score this application</h3>
-              <p style={{ color: "#991b1b", margin: 0 }}>{error}</p>
+              <p className="error-text">{error}</p>
             </div>
           </div>
         </div>

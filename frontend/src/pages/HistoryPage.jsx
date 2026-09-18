@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
-import { formatApiError, formatCurrency, getApplications } from "../api/client";
+import { formatApiError, formatCurrency, getApplications, humanizeLabel } from "../api/client";
 
 /** APPLICATION HISTORY */
 
@@ -78,7 +78,7 @@ export default function HistoryPage() {
           <div className="result-card error">
             <div className="result-details">
               <h3>Could not load history</h3>
-              <p style={{ color: "#991b1b", margin: 0 }}>{error}</p>
+              <p className="error-text">{error}</p>
             </div>
           </div>
         </div>
@@ -123,8 +123,8 @@ export default function HistoryPage() {
                       <td>{application.cibil_score ?? "—"}</td>
                       <td>{formatCurrency(application.loan_amount)}</td>
                       <td>
-                        <span className="badge medium">
-                          {application.status || "submitted"}
+                        <span className={`badge ${application.status === "assessed" ? "low" : "medium"}`}>
+                          {humanizeLabel(application.status || "submitted")}
                         </span>
                       </td>
                       <td>{application.assessments?.length ?? 0}</td>
