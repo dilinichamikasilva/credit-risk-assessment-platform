@@ -57,6 +57,7 @@ export default function RecommendedAmountPage() {
       // Guard: never send loan_amount as a model feature — API uses requested_amount for the cap only.
       const data = await predictRecommendedAmount(payload);
       setResult(data);
+      setValues(INITIAL_VALUES);
     } catch (err) {
       setError(formatApiError(err));
     } finally {

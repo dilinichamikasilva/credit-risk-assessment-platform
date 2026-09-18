@@ -84,6 +84,7 @@ export default function DefaultRiskPage() {
       );
       const data = await predictDefaultProbability(payload);
       setResult(data);
+      setValues(INITIAL_VALUES);
     } catch (err) {
       const detail = err.response?.data?.detail;
       setError(
