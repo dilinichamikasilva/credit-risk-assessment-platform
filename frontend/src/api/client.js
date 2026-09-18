@@ -22,6 +22,18 @@ export async function predictDefaultProbability(payload) {
   return data;
 }
 
+/** SITHUMINI — Model B / Calls the standalone Loan Approval API */
+export async function predictLoanApproval(payload) {
+  const { data } = await apiClient.post("/predict/loan-approval", payload);
+  return data;
+}
+
+/** SITHUMINI — History page: application list endpoint. */
+export async function getApplications(params = {}) {
+  const { data } = await apiClient.get("/applications", { params });
+  return data;
+}
+
 /** Sasuni — Model C standalone */
 export async function predictRecommendedAmount(payload) {
   const { data } = await apiClient.post("/predict/recommended-amount", payload);

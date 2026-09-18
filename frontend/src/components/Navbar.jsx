@@ -24,7 +24,12 @@ export default function Navbar() {
         >
           Dashboard
         </NavLink>
-        <span className="nav-link disabled">History</span>
+          <NavLink
+              to="/history"
+              className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+          >
+              History
+          </NavLink>
       </div>
 
       <div className="nav-divider" aria-hidden="true" />
@@ -37,7 +42,12 @@ export default function Navbar() {
         >
           Default Risk
         </NavLink>
-        <span className="nav-link disabled">Loan Approval</span>
+        <NavLink
+           to="/loan-approval"
+           className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
+        >
+           Loan Approval
+        </NavLink>
         <NavLink
           to="/recommended-amount"
           className={({ isActive }) => `nav-link${isActive ? " active" : ""}`}
